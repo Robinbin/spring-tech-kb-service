@@ -1,0 +1,170 @@
+# ── Spring Tech KB — 本地开发依赖服务 ─────────────────────────────────────────
+#
+# 核心服务（无 profile，默认全部启动）：
+#   postgres  → pgvector/pgvector:pg17        :5432
+#   redis     → redis:7-alpine                :6379
+#   tei       → HuggingFace TEI CPU（BGE-M3） :8081（Spring Boot 占 8080）
+#   minio     → MinIO                         :9000 API  / :9001 控制台
+#
+# 可观测性服务（profile: obs，需显式启用）：
+#   prometheus → prom/prometheus              :9090
+#   grafana    → grafana/grafana              :3000  (admin / ${GRAFANA_PASSWORD:-admin})
+#   jaeger     → jaegertracing/all-in-one     :16686 UI / :4318 OTLP/HTTP
+#
+# 快速启动（从 infra/ 目录运行）：
+#   核心服务：          docker compose --env-file .env up -d
+#   含可观测性：        docker compose --env-file .env --profile obs up -d
+#   查看健康状态：      docker compose ps
+#   停止并清理数据：    docker compose down -v
+
+services:
+
+  # ── PostgreSQL 17 + pgvector extension ────────────────────────────────────────
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: springkb-postgres
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-springkb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-springkb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # ── Redis 7 ───────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: springkb-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── HuggingFace TEI — Text Embeddings Inference（CPU） ────────────────────────
+  # 首次启动会从 HuggingFace Hub 下载模型（BGE-M3 约 570 MB），start_period 设为 3 分钟。
+  # 如使用私有模型，设置 HUGGING_FACE_HUB_TOKEN。
+  # 应用侧对应配置：TEI_BASE_URL=http://localhost:8081
+  tei:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-latest
+    container_name: springkb-tei
+    ports:
+      - "${TEI_PORT:-8081}:80"
+    environment:
+      HUGGING_FACE_HUB_TOKEN: ${HUGGING_FACE_HUB_TOKEN:-}
+    volumes:
+      - tei-models:/data
+    command: --model-id ${EMBEDDING_MODEL:-BAAI/bge-m3} --max-client-batch-size 32
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 180s
+
+  # ── HuggingFace TEI — Reranker（profile: rerank） ────────────────────────────
+  # B4：Cross-Encoder 精排（bge-reranker-v2-m3 约 580 MB），按需启用。
+  # 启动：docker compose --profile rerank up -d
+  # 应用侧对应配置：RERANKER_BASE_URL=http://localhost:8082  RERANKER_ENABLED=true
+  tei-reranker:
+    profiles: [rerank]
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-latest
+    container_name: springkb-tei-reranker
+    ports:
+      - "${RERANKER_PORT:-8082}:80"
+    environment:
+      HUGGING_FACE_HUB_TOKEN: ${HUGGING_FACE_HUB_TOKEN:-}
+    volumes:
+      - tei-reranker-models:/data
+    command: --model-id ${RERANKER_MODEL:-BAAI/bge-reranker-v2-m3} --max-client-batch-size 32
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 180s
+
+  # ── MinIO（S3 兼容对象存储） ────────────────────────────────────────────────────
+  minio:
+    image: minio/minio:latest
+    container_name: springkb-minio
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    volumes:
+      - minio-data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9000/minio/health/live || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ── Prometheus（profile: obs） ─────────────────────────────────────────────────
+  prometheus:
+    profiles: [obs]
+    image: prom/prometheus:latest
+    container_name: springkb-prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=7d"
+      - "--web.enable-lifecycle"
+
+  # ── Grafana（profile: obs） ────────────────────────────────────────────────────
+  grafana:
+    profiles: [obs]
+    image: grafana/grafana:latest
+    container_name: springkb-grafana
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  # ── Jaeger all-in-one（profile: obs）───────────────────────────────────────────
+  # 接收 OTel OTLP/HTTP 追踪（:4318），对应应用配置 OTLP_ENDPOINT=http://localhost:4318/v1/traces
+  jaeger:
+    profiles: [obs]
+    image: jaegertracing/all-in-one:latest
+    container_name: springkb-jaeger
+    ports:
+      - "${JAEGER_UI_PORT:-16686}:16686"
+      - "${JAEGER_OTLP_HTTP_PORT:-4318}:4318"
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+
+volumes:
+  pgdata:
+  redisdata:
+  tei-models:
+  tei-reranker-models:
+  minio-data:
+  prometheus-data:
+  grafana-data:

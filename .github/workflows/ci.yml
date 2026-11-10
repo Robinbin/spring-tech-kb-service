@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & Test (Java 21)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: temurin
+          cache: maven
+
+      # mvn verify：compile → test（含 ModularityTests + A1/A5 探针）→ 打包
+      # 所有测试均使用 ApplicationContextRunner 或 TestPropertySource 指向不存在的端口，
+      # 无需真实数据库或 Docker —— 与 A1 验证结论一致。
+      - name: Build and test
+        run: mvn -B verify
+
+      - name: Upload Surefire reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
+          if-no-files-found: ignore

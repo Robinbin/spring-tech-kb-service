@@ -1,0 +1,1815 @@
+{
+  "schema_version": "c1-v1.0",
+  "created_at": "2026-10-28",
+  "description": "Spring 技术知识库 RAG 评测集，100 条人工标注样本（IC-6 v1.0）",
+  "total_samples": 100,
+  "intent_distribution": {"concept": 25, "source_code": 25, "comparison": 25, "best_practice": 25},
+  "version_sensitive_count": 19,
+  "samples": [
+    {
+      "id": "c1-001",
+      "query": "What is Inversion of Control (IoC) in Spring?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "IoC container manages object creation and lifecycle",
+        "Dependencies are injected externally not instantiated internally",
+        "Reduces coupling between classes",
+        "ApplicationContext is the primary IoC container"
+      ],
+      "expected_chunk_keywords": ["IoC", "inversion of control", "ApplicationContext", "BeanFactory", "dependency injection"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-002",
+      "query": "What is the difference between ApplicationContext and BeanFactory?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "BeanFactory is the basic container with lazy initialization",
+        "ApplicationContext extends BeanFactory with eager bean initialization",
+        "ApplicationContext adds event propagation, i18n, and AOP integration",
+        "Prefer ApplicationContext in most Spring Boot applications"
+      ],
+      "expected_chunk_keywords": ["ApplicationContext", "BeanFactory", "eager initialization", "lazy initialization", "event propagation"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-003",
+      "query": "What is the Spring Bean lifecycle from creation to destruction?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Instantiation via constructor",
+        "Dependency injection of properties",
+        "@PostConstruct or init-method callback",
+        "Bean ready for use",
+        "@PreDestroy or destroy-method on context close"
+      ],
+      "expected_chunk_keywords": ["bean lifecycle", "@PostConstruct", "@PreDestroy", "InitializingBean", "DisposableBean"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-004",
+      "query": "How does Spring AOP proxy creation work?",
+      "intent": "concept",
+      "spring_module": "aop",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "AOP creates proxies that wrap target beans",
+        "JDK dynamic proxy used when target implements interface",
+        "CGLIB subclass proxy used for concrete classes",
+        "Advice types: Before, After, Around, AfterReturning, AfterThrowing"
+      ],
+      "expected_chunk_keywords": ["AOP", "proxy", "CGLIB", "JDK proxy", "advice", "pointcut", "joinpoint", "aspect"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-005",
+      "query": "What are Spring stereotype annotations and their differences?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@Component is the generic stereotype",
+        "@Service semantically marks service layer",
+        "@Repository adds persistence exception translation",
+        "@Controller marks MVC controllers",
+        "All enable component scanning"
+      ],
+      "expected_chunk_keywords": ["@Component", "@Service", "@Repository", "@Controller", "stereotype", "component scanning"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-006",
+      "query": "How does Spring MVC DispatcherServlet process requests?",
+      "intent": "concept",
+      "spring_module": "mvc",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "DispatcherServlet implements Front Controller pattern",
+        "HandlerMapping finds the matching handler",
+        "HandlerAdapter invokes the handler method",
+        "ViewResolver resolves the logical view name",
+        "ModelAndView returned or @ResponseBody serialized"
+      ],
+      "expected_chunk_keywords": ["DispatcherServlet", "HandlerMapping", "HandlerAdapter", "ViewResolver", "Front Controller", "ModelAndView"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-007",
+      "query": "What is Spring Boot AutoConfiguration and how is it enabled?",
+      "intent": "concept",
+      "spring_module": "boot",
+      "spring_version": "boot-4.x",
+      "version_sensitive": true,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "@SpringBootApplication enables auto-configuration scanning",
+        "Auto-configurations are @ConditionalOnClass/@ConditionalOnMissingBean",
+        "Boot 3.x: defined in META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports",
+        "Boot 4.x: package paths relocated from o.s.boot.autoconfigure to o.s.boot.<module>.autoconfigure"
+      ],
+      "expected_chunk_keywords": ["@SpringBootApplication", "AutoConfiguration", "AutoConfiguration.imports", "@ConditionalOnClass", "auto-configure"],
+      "chunk_ids": [],
+      "notes": "Boot 4 relocated all autoconfigure packages — critical version-sensitive fact"
+    },
+    {
+      "id": "c1-008",
+      "query": "How do Spring Boot profiles work for environment-specific configuration?",
+      "intent": "concept",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@Profile annotation activates beans for specific profiles",
+        "spring.profiles.active property activates profiles",
+        "application-{profile}.yml files loaded for active profiles",
+        "Multiple profiles can be active simultaneously"
+      ],
+      "expected_chunk_keywords": ["@Profile", "spring.profiles.active", "profile", "application-dev.yml", "environment"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-009",
+      "query": "What is Spring Data JPA Repository and how does it simplify data access?",
+      "intent": "concept",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "Repository interface eliminates boilerplate DAO code",
+        "JpaRepository provides full CRUD + paging + sorting",
+        "Derived query methods from method names (findByEmail)",
+        "Custom @Query for complex queries"
+      ],
+      "expected_chunk_keywords": ["JpaRepository", "CrudRepository", "derived query", "findBy", "repository pattern", "@Repository"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-010",
+      "query": "What is @Transactional and how does transaction propagation work?",
+      "intent": "concept",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "@Transactional applies declarative transaction management via AOP proxy",
+        "REQUIRED propagation joins existing transaction or creates new",
+        "REQUIRES_NEW suspends current and starts independent transaction",
+        "readOnly=true hint allows optimizations for read queries"
+      ],
+      "expected_chunk_keywords": ["@Transactional", "transaction propagation", "REQUIRED", "REQUIRES_NEW", "AOP proxy", "rollback"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-011",
+      "query": "What is the Spring Security filter chain architecture?",
+      "intent": "concept",
+      "spring_module": "security",
+      "spring_version": "6.x",
+      "version_sensitive": true,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "SecurityFilterChain is a @Bean in Spring Security 6 (replaces WebSecurityConfigurerAdapter)",
+        "Ordered servlet filters intercept every request",
+        "UsernamePasswordAuthenticationFilter handles form login",
+        "BasicAuthenticationFilter handles HTTP Basic",
+        "ExceptionTranslationFilter translates security exceptions"
+      ],
+      "expected_chunk_keywords": ["SecurityFilterChain", "filter chain", "UsernamePasswordAuthenticationFilter", "Spring Security 6", "HttpSecurity"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-012",
+      "query": "What is CSRF protection and when should you disable it?",
+      "intent": "concept",
+      "spring_module": "security",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "CSRF tokens prevent cross-site request forgery attacks",
+        "Spring Security adds CsrfFilter by default",
+        "Synchronizer Token Pattern embeds token in forms",
+        "Disable CSRF for stateless REST APIs using JWT/OAuth2"
+      ],
+      "expected_chunk_keywords": ["CSRF", "CsrfFilter", "synchronizer token", "stateless", "csrf().disable()", "cross-site request forgery"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-013",
+      "query": "How does the Spring Cache abstraction work?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@Cacheable caches method return value on first call",
+        "@CacheEvict removes entries from cache",
+        "@CachePut always updates cache without skipping method",
+        "Multiple backends via CacheManager (Redis, EhCache, Caffeine)"
+      ],
+      "expected_chunk_keywords": ["@Cacheable", "@CacheEvict", "@CachePut", "CacheManager", "@EnableCaching", "cache abstraction"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-014",
+      "query": "What are Spring Boot Actuator endpoints and how do you secure them?",
+      "intent": "concept",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "Actuator exposes operational endpoints (/health, /metrics, /info)",
+        "management.endpoints.web.exposure.include configures exposed endpoints",
+        "Secure with Spring Security or management.server.port isolation",
+        "Micrometer integration for metrics collection"
+      ],
+      "expected_chunk_keywords": ["Actuator", "/actuator/health", "/actuator/metrics", "management.endpoints.web.exposure", "Micrometer"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-015",
+      "query": "What is @ConfigurationProperties and how does type-safe binding work?",
+      "intent": "concept",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@ConfigurationProperties binds configuration hierarchies to POJOs",
+        "Relaxed binding (camelCase = kebab-case = UPPER_CASE)",
+        "@EnableConfigurationProperties or @ConfigurationPropertiesScan to register",
+        "Supports @Validated with Jakarta Bean Validation"
+      ],
+      "expected_chunk_keywords": ["@ConfigurationProperties", "type-safe binding", "relaxed binding", "@EnableConfigurationProperties", "@Validated"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-016",
+      "query": "How does the Spring Event system work?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "ApplicationEventPublisher.publishEvent() publishes events",
+        "@EventListener listens to typed events (Spring 4.2+)",
+        "@TransactionalEventListener binds to transaction phase",
+        "Events are synchronous by default; @Async for async handling"
+      ],
+      "expected_chunk_keywords": ["ApplicationEvent", "@EventListener", "ApplicationEventPublisher", "@TransactionalEventListener", "event-driven"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-017",
+      "query": "What is Spring Expression Language (SpEL) and where is it used?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "SpEL evaluates expressions at runtime using #{...} syntax",
+        "Used in @Value for dynamic property resolution",
+        "@PreAuthorize/@PostAuthorize for security expressions",
+        "@Cacheable key expressions, @Scheduled cron expressions"
+      ],
+      "expected_chunk_keywords": ["SpEL", "@Value", "#{...}", "@PreAuthorize", "expression language", "@Cacheable key"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-018",
+      "query": "What is RestClient and how does it differ from RestTemplate?",
+      "intent": "concept",
+      "spring_module": "mvc",
+      "spring_version": "6.1",
+      "version_sensitive": true,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "RestClient introduced in Spring 6.1 as synchronous replacement for RestTemplate",
+        "Fluent builder API: RestClient.builder().baseUrl().build()",
+        "RestTemplate is in maintenance mode since Spring 5.0",
+        "Both synchronous blocking; WebClient is the reactive option"
+      ],
+      "expected_chunk_keywords": ["RestClient", "RestTemplate", "Spring 6.1", "fluent API", "synchronous", "RestClient.builder"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-019",
+      "query": "What is Spring Modulith and what problem does it solve?",
+      "intent": "concept",
+      "spring_module": "modulith",
+      "spring_version": "6.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Spring Modulith enforces modular monolith boundaries at build/test time",
+        "@ApplicationModule defines a module with allowed dependencies",
+        "internal package is inaccessible from other modules",
+        "Event-based inter-module communication via event_publication table"
+      ],
+      "expected_chunk_keywords": ["Spring Modulith", "@ApplicationModule", "module boundary", "internal package", "ModularityTests", "event_publication"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-020",
+      "query": "What is Spring AI and what AI capabilities does it provide?",
+      "intent": "concept",
+      "spring_module": "ai",
+      "spring_version": "boot-4.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Spring AI 2.x is compatible with Spring Boot 4.x (1.x requires Boot 3.x)",
+        "ChatClient API for LLM conversations with streaming support",
+        "EmbeddingModel for text vectorization",
+        "VectorStore (including PgVectorStore) for RAG",
+        "Spring AI 2.x Anthropic integration uses official anthropic-java-core SDK"
+      ],
+      "expected_chunk_keywords": ["Spring AI", "ChatClient", "EmbeddingModel", "VectorStore", "RAG", "spring-ai-bom", "anthropic"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-021",
+      "query": "How does @Async work in Spring and what are its requirements?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@EnableAsync activates async method execution",
+        "@Async marks methods to run in separate thread pool",
+        "Returns void, Future, or CompletableFuture",
+        "Cannot call @Async on same class (self-invocation bypasses proxy)"
+      ],
+      "expected_chunk_keywords": ["@Async", "@EnableAsync", "ThreadPoolTaskExecutor", "CompletableFuture", "async execution", "self-invocation"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-022",
+      "query": "What is Spring Batch and what is its Job/Step model?",
+      "intent": "concept",
+      "spring_module": "batch",
+      "spring_version": "6.x",
+      "version_sensitive": true,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Spring Batch 6.x is required for Spring Boot 4.x (5.x for Boot 3.x)",
+        "Job contains ordered Steps; each Step has ItemReader/Processor/Writer",
+        "Chunk-oriented processing reads/processes/writes in configurable chunks",
+        "JobRepository persists execution metadata for restartability"
+      ],
+      "expected_chunk_keywords": ["Spring Batch", "Job", "Step", "ItemReader", "ItemWriter", "chunk processing", "JobRepository"],
+      "chunk_ids": [],
+      "notes": "Batch 5.x on Boot 3.x, Batch 6.x on Boot 4.x"
+    },
+    {
+      "id": "c1-023",
+      "query": "What are virtual threads in Spring Boot and how do you enable them?",
+      "intent": "concept",
+      "spring_module": "boot",
+      "spring_version": "boot-3.2",
+      "version_sensitive": true,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Virtual threads (Project Loom) available in Java 21",
+        "spring.threads.virtual.enabled=true in Boot 3.2+",
+        "Replaces ThreadPoolTaskExecutor with virtual thread factory",
+        "Enables high concurrency for blocking I/O (e.g., LLM calls) without tuning"
+      ],
+      "expected_chunk_keywords": ["virtual threads", "Project Loom", "spring.threads.virtual.enabled", "Java 21", "VirtualThreadTaskExecutor"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-024",
+      "query": "What is the difference between @Bean on @Configuration class vs @Component class?",
+      "intent": "concept",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Full @Configuration uses CGLIB subclass proxy for @Bean methods",
+        "Inter-@Bean method calls in full @Configuration return the same singleton",
+        "@Component with @Bean (lite mode) does NOT proxy — inter-bean calls create new instances",
+        "Use full @Configuration when @Bean methods call each other"
+      ],
+      "expected_chunk_keywords": ["@Configuration", "@Bean", "CGLIB proxy", "lite mode", "proxyBeanMethods", "singleton", "inter-bean call"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-025",
+      "query": "What changed in Spring Boot 4.x regarding autoconfigure package paths?",
+      "intent": "concept",
+      "spring_module": "boot",
+      "spring_version": "boot-4.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Boot 4 relocated ALL autoconfigure classes from o.s.boot.autoconfigure.<module> to o.s.boot.<module>.autoconfigure",
+        "Example: DataSourceAutoConfiguration moved to o.s.boot.jdbc.autoconfigure",
+        "All Boot 3 code that imports autoconfigure classes by name will fail to compile",
+        "Read META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports for actual class names"
+      ],
+      "expected_chunk_keywords": ["autoconfigure relocation", "Boot 4 migration", "org.springframework.boot.jdbc.autoconfigure", "AutoConfiguration.imports", "package path change"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-026",
+      "query": "How do you configure multiple DataSources in Spring Boot?",
+      "intent": "source_code",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Annotate primary DataSource with @Primary",
+        "Use @Qualifier to inject specific DataSource",
+        "Create separate @Bean TransactionManager for each DataSource",
+        "Configure separate EntityManagerFactory for each JPA DataSource"
+      ],
+      "expected_chunk_keywords": ["@Primary", "@Qualifier", "DataSource", "HikariDataSource", "multiple datasource", "TransactionManager"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-027",
+      "query": "How do you implement constructor injection in Spring?",
+      "intent": "source_code",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "Single constructor is auto-wired without @Autowired in Spring 4.3+",
+        "Use final fields for constructor-injected dependencies",
+        "@Autowired required for multiple constructors",
+        "Constructor injection makes dependencies explicit and enables immutability"
+      ],
+      "expected_chunk_keywords": ["constructor injection", "@Autowired", "final fields", "single constructor", "immutability", "Spring 4.3"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-028",
+      "query": "How do you implement global exception handling with @ControllerAdvice?",
+      "intent": "source_code",
+      "spring_module": "mvc",
+      "spring_version": "boot-3.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "@RestControllerAdvice combines @ControllerAdvice + @ResponseBody",
+        "@ExceptionHandler methods catch specific exception types",
+        "ProblemDetail (RFC 7807) for structured error responses in Boot 3+",
+        "@ResponseStatus sets HTTP status code on exception class"
+      ],
+      "expected_chunk_keywords": ["@RestControllerAdvice", "@ExceptionHandler", "ProblemDetail", "RFC 7807", "global exception handling", "@ResponseStatus"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-029",
+      "query": "How do you configure @Transactional with custom rollback rules?",
+      "intent": "source_code",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "rollbackFor attribute specifies checked exceptions that trigger rollback",
+        "noRollbackFor excludes exceptions from rollback",
+        "RuntimeExceptions roll back by default",
+        "@Transactional(rollbackFor = {SomeCheckedException.class})"
+      ],
+      "expected_chunk_keywords": ["@Transactional", "rollbackFor", "noRollbackFor", "checked exception", "rollback", "transaction management"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-030",
+      "query": "How do you implement JWT authentication in Spring Security 6?",
+      "intent": "source_code",
+      "spring_module": "security",
+      "spring_version": "6.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Define SecurityFilterChain @Bean with HttpSecurity lambda DSL",
+        "Use oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)",
+        "Configure JwtDecoder bean from JWKS endpoint or secret",
+        "Custom OncePerRequestFilter for stateless JWT validation if not using OAuth2 auto-config"
+      ],
+      "expected_chunk_keywords": ["JWT", "SecurityFilterChain", "oauth2ResourceServer", "JwtDecoder", "Spring Security 6", "BearerTokenAuthenticationFilter"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-031",
+      "query": "How do you create a custom Spring Boot AutoConfiguration class?",
+      "intent": "source_code",
+      "spring_module": "boot",
+      "spring_version": "boot-4.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Annotate class with @AutoConfiguration (not @Configuration)",
+        "@ConditionalOnClass / @ConditionalOnMissingBean for conditional activation",
+        "Register in META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports",
+        "Boot 4: class package must use o.s.boot.<module>.autoconfigure convention"
+      ],
+      "expected_chunk_keywords": ["@AutoConfiguration", "AutoConfiguration.imports", "@ConditionalOnClass", "@ConditionalOnMissingBean", "custom starter", "Boot 4 autoconfigure"],
+      "chunk_ids": [],
+      "notes": "Boot 4 breaking change: Tracer bean not auto-configured"
+    },
+    {
+      "id": "c1-032",
+      "query": "How do you write JPQL queries with @Query in Spring Data JPA?",
+      "intent": "source_code",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@Query on repository method with JPQL string",
+        "Use :paramName or ?1 positional parameters with @Param",
+        "@Modifying required for UPDATE/DELETE queries",
+        "nativeQuery=true for native SQL when JPQL is insufficient"
+      ],
+      "expected_chunk_keywords": ["@Query", "JPQL", "nativeQuery", "@Modifying", "@Param", "named parameter", "positional parameter"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-033",
+      "query": "How do you implement pagination with Spring Data JPA?",
+      "intent": "source_code",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "Add Pageable parameter to repository method",
+        "Return Page<T> for total count or Slice<T> for streaming without count",
+        "PageRequest.of(page, size, Sort.by(...))",
+        "Use @PageableDefault for default pagination in controllers"
+      ],
+      "expected_chunk_keywords": ["Pageable", "Page", "PageRequest", "pagination", "PagingAndSortingRepository", "@PageableDefault", "Slice"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-034",
+      "query": "How do you configure Redis as the Spring Boot cache backend?",
+      "intent": "source_code",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Add spring-boot-starter-data-redis dependency",
+        "Configure spring.data.redis.host and port",
+        "@EnableCaching activates cache infrastructure",
+        "RedisCacheManager auto-configured when Redis and Spring Cache are on classpath"
+      ],
+      "expected_chunk_keywords": ["Redis", "RedisCacheManager", "@EnableCaching", "spring.data.redis", "RedisTemplate", "cache configuration"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-035",
+      "query": "How do you integrate Testcontainers with @SpringBootTest in Boot 3.x?",
+      "intent": "source_code",
+      "spring_module": "boot",
+      "spring_version": "boot-3.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Add testcontainers BOM and module dependencies",
+        "@Testcontainers on test class activates container management",
+        "@Container on static field starts container before Spring context",
+        "@ServiceConnection (Boot 3.1+) auto-configures datasource from container; @DynamicPropertySource for manual wiring"
+      ],
+      "expected_chunk_keywords": ["@Testcontainers", "@Container", "@ServiceConnection", "@DynamicPropertySource", "Testcontainers", "PostgreSQLContainer"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-036",
+      "query": "How do you write a custom Spring MVC HandlerMethodArgumentResolver?",
+      "intent": "source_code",
+      "spring_module": "mvc",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Implement HandlerMethodArgumentResolver interface",
+        "supportsParameter() returns true for handled parameter types",
+        "resolveArgument() extracts and returns the argument value",
+        "Register in WebMvcConfigurer.addArgumentResolvers()"
+      ],
+      "expected_chunk_keywords": ["HandlerMethodArgumentResolver", "supportsParameter", "resolveArgument", "WebMvcConfigurer", "addArgumentResolvers", "custom argument"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-037",
+      "query": "How do you configure distributed tracing in Spring Boot 4 with OpenTelemetry?",
+      "intent": "source_code",
+      "spring_module": "boot",
+      "spring_version": "boot-4.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Boot 4 removed built-in Micrometer Tracing auto-configuration",
+        "Must manually create OpenTelemetrySdk and OtelTracer beans",
+        "Use micrometer-tracing-bridge-otel + opentelemetry-exporter-otlp dependencies",
+        "management.otlp.tracing.endpoint configures OTLP endpoint; avoid buildAndRegisterGlobal() in multi-context tests"
+      ],
+      "expected_chunk_keywords": ["OpenTelemetry", "micrometer-tracing-bridge-otel", "OpenTelemetrySdk", "OtelTracer", "OTLP", "management.otlp.tracing"],
+      "chunk_ids": [],
+      "notes": "Boot 4 breaking change: Tracer bean not auto-configured"
+    },
+    {
+      "id": "c1-038",
+      "query": "How do you implement method-level security with @PreAuthorize?",
+      "intent": "source_code",
+      "spring_module": "security",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "@EnableMethodSecurity on @Configuration class (replaces @EnableGlobalMethodSecurity in Security 6)",
+        "@PreAuthorize('hasRole(\"ADMIN\")') on method",
+        "SpEL expressions access #argumentName",
+        "@PostAuthorize validates return value after method execution"
+      ],
+      "expected_chunk_keywords": ["@PreAuthorize", "@EnableMethodSecurity", "hasRole", "hasAuthority", "SpEL", "method security", "@PostAuthorize"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-039",
+      "query": "How do you configure CORS in a Spring MVC REST API?",
+      "intent": "source_code",
+      "spring_module": "mvc",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@CrossOrigin on controller or method for simple cases",
+        "WebMvcConfigurer.addCorsMappings() for global configuration",
+        "CorsConfigurationSource @Bean needed when Spring Security is active",
+        "allowedOrigins, allowedMethods, allowedHeaders, allowCredentials"
+      ],
+      "expected_chunk_keywords": ["CORS", "@CrossOrigin", "WebMvcConfigurer", "addCorsMappings", "CorsConfigurationSource", "Access-Control-Allow-Origin"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-040",
+      "query": "How do you use Spring AI ChatClient to call an LLM with streaming?",
+      "intent": "source_code",
+      "spring_module": "ai",
+      "spring_version": "boot-4.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Inject ChatClient.Builder and build per-call or keep singleton",
+        ".prompt().user(userMessage).call().content() for blocking",
+        ".prompt().user(userMessage).stream().content() returns Flux<String> for streaming",
+        "spring.ai.anthropic.api-key configures the API key via environment variable"
+      ],
+      "expected_chunk_keywords": ["ChatClient", "ChatClient.Builder", "stream()", "Flux", "spring-ai-anthropic", "ANTHROPIC_API_KEY", "streaming LLM"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-041",
+      "query": "How do you set up a Spring Batch job with chunk-oriented processing in Spring Boot 4?",
+      "intent": "source_code",
+      "spring_module": "batch",
+      "spring_version": "6.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Use Spring Batch 6.x for Spring Boot 4.x",
+        "@EnableBatchProcessing optional in Boot 4 (auto-configuration handles it)",
+        "JobBuilder and StepBuilder for fluent job definition",
+        "chunk(chunkSize) sets read/process/write batch size"
+      ],
+      "expected_chunk_keywords": ["Spring Batch 6", "JobBuilder", "StepBuilder", "chunk", "@EnableBatchProcessing", "ItemReader", "ItemWriter", "Boot 4"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-042",
+      "query": "How do you implement reliable event-driven communication between Spring Modulith modules?",
+      "intent": "source_code",
+      "spring_module": "modulith",
+      "spring_version": "6.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "ApplicationEventPublisher.publishEvent() within a @Transactional method writes to event_publication table",
+        "@ApplicationModuleListener on consumer method processes with retry support",
+        "Incomplete publications visible in /actuator/modulithEvents endpoint",
+        "Ensures at-least-once delivery even if consumer fails"
+      ],
+      "expected_chunk_keywords": ["@ApplicationModuleListener", "ApplicationEventPublisher", "event_publication", "Modulith", "reliable messaging", "transactional outbox"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-043",
+      "query": "How do you tune HikariCP connection pool settings in Spring Boot?",
+      "intent": "source_code",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "spring.datasource.hikari.maximum-pool-size (default 10)",
+        "spring.datasource.hikari.minimum-idle prevents idle connections",
+        "spring.datasource.hikari.connection-timeout default 30s",
+        "Pool size guideline: (CPU cores * 2) + effective spindle count for DBs"
+      ],
+      "expected_chunk_keywords": ["HikariCP", "maximum-pool-size", "minimum-idle", "connection-timeout", "spring.datasource.hikari", "connection pool tuning"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-044",
+      "query": "How do you use Spring Data Projections for read-only queries?",
+      "intent": "source_code",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Interface-based projection: define interface with get-methods matching entity fields",
+        "DTO projection: @Value('#{target.field}') SpEL or constructor expression",
+        "Class-based projection for DTO with constructor",
+        "Limits SELECT columns — reduces data transfer"
+      ],
+      "expected_chunk_keywords": ["Spring Data Projection", "interface projection", "DTO projection", "@Value SpEL", "class projection", "read-only"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-045",
+      "query": "How do you test a Spring MVC REST controller with MockMvc?",
+      "intent": "source_code",
+      "spring_module": "mvc",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@WebMvcTest loads only web layer (no full context)",
+        "MockMvc.perform(get('/api/users')) with fluent API",
+        "andExpect(status().isOk()) verifies HTTP status",
+        "andExpect(jsonPath('$.name').value('Alice')) verifies JSON response"
+      ],
+      "expected_chunk_keywords": ["MockMvc", "@WebMvcTest", "perform", "andExpect", "jsonPath", "MockMvcResultMatchers", "status().isOk"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-046",
+      "query": "How do you schedule recurring tasks with @Scheduled?",
+      "intent": "source_code",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@EnableScheduling on @Configuration class enables scheduling",
+        "@Scheduled(cron = '0 0 * * * *') for cron expression",
+        "@Scheduled(fixedRate = 5000) for fixed-rate in milliseconds",
+        "spring.task.scheduling.pool.size for concurrent scheduled tasks"
+      ],
+      "expected_chunk_keywords": ["@Scheduled", "@EnableScheduling", "cron", "fixedRate", "fixedDelay", "ThreadPoolTaskScheduler", "spring.task.scheduling"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-047",
+      "query": "How do you use Spring AI PgVectorStore for vector similarity search?",
+      "intent": "source_code",
+      "spring_module": "ai",
+      "spring_version": "boot-4.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "spring-ai-starter-vector-store-pgvector adds PgVectorStore auto-configuration",
+        "spring.ai.vectorstore.pgvector.initialize-schema=false lets Flyway manage schema",
+        "VectorStore.add(documents) stores embedded documents",
+        "VectorStore.similaritySearch(SearchRequest.builder().query().topK().build()) retrieves similar"
+      ],
+      "expected_chunk_keywords": ["PgVectorStore", "VectorStore", "SearchRequest", "initialize-schema", "spring-ai-pgvector", "similaritySearch", "EmbeddingModel"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-048",
+      "query": "How do you implement a custom Spring Boot health indicator in Boot 4?",
+      "intent": "source_code",
+      "spring_module": "boot",
+      "spring_version": "boot-4.x",
+      "version_sensitive": true,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Implement HealthIndicator from org.springframework.boot.health.contributor (Boot 4 moved package)",
+        "Override health() method returning Health.up() or Health.down()",
+        "@Component registers the indicator",
+        "Health endpoint name derived from bean name minus 'HealthIndicator' suffix"
+      ],
+      "expected_chunk_keywords": ["HealthIndicator", "Health.up", "Health.down", "org.springframework.boot.health.contributor", "custom health", "/actuator/health"],
+      "chunk_ids": [],
+      "notes": "Boot 4 package change: org.springframework.boot.actuate.health → org.springframework.boot.health.contributor"
+    },
+    {
+      "id": "c1-049",
+      "query": "How do you configure Spring Boot for Kubernetes liveness and readiness probes?",
+      "intent": "source_code",
+      "spring_module": "boot",
+      "spring_version": "boot-2.3",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "management.health.probes.enabled=true activates Kubernetes probes",
+        "/actuator/health/liveness checks if app should be restarted",
+        "/actuator/health/readiness checks if app can receive traffic",
+        "Graceful shutdown with server.shutdown=graceful prevents traffic during termination"
+      ],
+      "expected_chunk_keywords": ["liveness probe", "readiness probe", "management.health.probes.enabled", "/actuator/health/liveness", "Kubernetes", "graceful shutdown"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-050",
+      "query": "How do you enforce Spring Modulith module boundaries in tests?",
+      "intent": "source_code",
+      "spring_module": "modulith",
+      "spring_version": "6.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Create ModularityTests class calling ApplicationModules.of(App.class).verify()",
+        "@ApplicationModule(allowedDependencies={'moduleB'}) restricts inter-module imports",
+        "internal package classes inaccessible from other modules",
+        "ModularityTests runs at build time without Spring context startup"
+      ],
+      "expected_chunk_keywords": ["ModularityTests", "ApplicationModules.verify", "@ApplicationModule", "allowedDependencies", "internal package", "ArchUnit", "module boundary"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-051",
+      "query": "What are the differences between field injection, setter injection, and constructor injection?",
+      "intent": "comparison",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Constructor injection recommended: immutable, testable without Spring",
+        "Field injection hides dependencies and complicates testing",
+        "Setter injection for optional or reconfigurable dependencies",
+        "Spring 4.3+ auto-wires single constructors without @Autowired"
+      ],
+      "expected_chunk_keywords": ["constructor injection", "field injection", "setter injection", "@Autowired", "immutability", "testability", "best practice"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-052",
+      "query": "What changed in Spring Security configuration from version 5 to version 6?",
+      "intent": "comparison",
+      "spring_module": "security",
+      "spring_version": "6.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "WebSecurityConfigurerAdapter removed — use SecurityFilterChain @Bean instead",
+        "Lambda DSL required in Security 6 (no method chaining)",
+        "@EnableWebSecurity no longer needed explicitly in Boot apps",
+        "authorizeHttpRequests() replaces authorizeRequests()"
+      ],
+      "expected_chunk_keywords": ["WebSecurityConfigurerAdapter", "SecurityFilterChain", "lambda DSL", "Spring Security 6", "authorizeHttpRequests", "HttpSecurity"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-053",
+      "query": "What is the javax.* to jakarta.* migration required by Spring 6?",
+      "intent": "comparison",
+      "spring_module": "boot",
+      "spring_version": "6.x",
+      "version_sensitive": true,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Spring 6 requires Jakarta EE 9+ — all javax.* packages become jakarta.*",
+        "javax.persistence.Entity → jakarta.persistence.Entity",
+        "javax.validation.constraints → jakarta.validation.constraints",
+        "javax.servlet → jakarta.servlet — affects web components"
+      ],
+      "expected_chunk_keywords": ["jakarta.persistence", "javax migration", "Jakarta EE 9", "Spring 6 migration", "namespace change", "javax.servlet"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-054",
+      "query": "When should you use RestClient vs WebClient vs RestTemplate?",
+      "intent": "comparison",
+      "spring_module": "mvc",
+      "spring_version": "6.1",
+      "version_sensitive": true,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "RestTemplate is in maintenance mode — not recommended for new code",
+        "RestClient (Spring 6.1) is the synchronous blocking replacement with fluent API",
+        "WebClient is for reactive/non-blocking use cases",
+        "Use RestClient in Spring MVC apps, WebClient in Spring WebFlux apps"
+      ],
+      "expected_chunk_keywords": ["RestClient", "WebClient", "RestTemplate", "Spring 6.1", "synchronous", "reactive", "fluent API"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-055",
+      "query": "What are the differences between @SpringBootTest, @WebMvcTest, and @DataJpaTest?",
+      "intent": "comparison",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@SpringBootTest loads full ApplicationContext — slowest but most comprehensive",
+        "@WebMvcTest loads only web layer — fast for controller tests, needs @MockBean for services",
+        "@DataJpaTest loads only JPA/Hibernate layer with in-memory DB by default",
+        "Slice tests significantly faster than full context tests"
+      ],
+      "expected_chunk_keywords": ["@SpringBootTest", "@WebMvcTest", "@DataJpaTest", "test slice", "@MockBean", "ApplicationContext", "test speed"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-056",
+      "query": "What are the differences between JPQL, Criteria API, and QueryDSL in Spring Data?",
+      "intent": "comparison",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "JPQL is string-based, prone to runtime errors, readable for simple queries",
+        "Criteria API is type-safe at compile time but verbose",
+        "QueryDSL generates Q-classes from entities, most readable type-safe option",
+        "Spring Data supports all three via @Query, CriteriaBuilder, QuerydslPredicateExecutor"
+      ],
+      "expected_chunk_keywords": ["JPQL", "Criteria API", "QueryDSL", "Q-classes", "type-safe query", "@Query", "CriteriaBuilder"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-057",
+      "query": "What are the key differences between Spring Boot 2.x and Spring Boot 3.x?",
+      "intent": "comparison",
+      "spring_module": "boot",
+      "spring_version": "boot-3.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Boot 3 requires Java 17 baseline (Boot 2 Java 8+)",
+        "javax.* packages replaced by jakarta.* throughout",
+        "Spring Security 6 with SecurityFilterChain replaces WebSecurityConfigurerAdapter",
+        "Native GraalVM image support; Boot 3.2+ adds virtual threads support"
+      ],
+      "expected_chunk_keywords": ["Spring Boot 3", "Java 17", "jakarta namespace", "Spring Security 6", "GraalVM native", "virtual threads", "migration"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-058",
+      "query": "What are the key differences between Spring Boot 3.x and Spring Boot 4.x?",
+      "intent": "comparison",
+      "spring_module": "boot",
+      "spring_version": "boot-4.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Boot 4 requires Java 21 baseline (LTS)",
+        "All autoconfigure package paths relocated (o.s.boot.autoconfigure.<mod> → o.s.boot.<mod>.autoconfigure)",
+        "Spring AI 2.x required (1.x incompatible), Spring Batch 6.x required",
+        "MeterRegistryCustomizer moved to o.s.boot.micrometer.metrics.autoconfigure; Tracer not auto-configured"
+      ],
+      "expected_chunk_keywords": ["Spring Boot 4", "Java 21", "autoconfigure relocation", "Spring AI 2.x incompatible", "Boot 4 migration", "breaking changes"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-059",
+      "query": "What is the difference between REQUIRED and REQUIRES_NEW transaction propagation?",
+      "intent": "comparison",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "REQUIRED (default): joins existing transaction if present, creates new otherwise",
+        "REQUIRES_NEW: always creates a new independent transaction, suspends outer transaction",
+        "Use REQUIRES_NEW when inner transaction must commit/rollback independently",
+        "REQUIRES_NEW requires two database connections simultaneously"
+      ],
+      "expected_chunk_keywords": ["REQUIRED", "REQUIRES_NEW", "transaction propagation", "@Transactional", "nested transaction", "suspend"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-060",
+      "query": "When should you use @Value vs @ConfigurationProperties?",
+      "intent": "comparison",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@Value for individual properties or SpEL expressions",
+        "@ConfigurationProperties for binding groups of properties to a POJO",
+        "@ConfigurationProperties supports validation and relaxed binding",
+        "@Value is simpler but less refactoring-safe for large config sets"
+      ],
+      "expected_chunk_keywords": ["@Value", "@ConfigurationProperties", "relaxed binding", "property binding", "@Validated", "type-safe configuration"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-061",
+      "query": "What is the difference between Spring MVC filters, interceptors, and AOP advice?",
+      "intent": "comparison",
+      "spring_module": "mvc",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Servlet Filter operates before Spring context, wraps entire request/response",
+        "HandlerInterceptor is Spring MVC-aware, has access to handler and ModelAndView",
+        "AOP Advice operates at method level within Spring beans",
+        "Use Filter for cross-cutting request concerns, Interceptor for MVC-specific, AOP for service-layer"
+      ],
+      "expected_chunk_keywords": ["Filter", "HandlerInterceptor", "AOP advice", "servlet filter", "preHandle", "postHandle", "cross-cutting"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-062",
+      "query": "When should you choose Spring WebFlux over Spring MVC?",
+      "intent": "comparison",
+      "spring_module": "mvc",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "WebFlux for high-concurrency non-blocking I/O (thousands of concurrent connections)",
+        "Spring MVC suitable for typical CRUD apps with moderate concurrency",
+        "Do not mix blocking code in WebFlux (kills scalability)",
+        "WebFlux uses Project Reactor Mono/Flux instead of plain objects"
+      ],
+      "expected_chunk_keywords": ["WebFlux", "Spring MVC", "non-blocking", "reactive", "Mono", "Flux", "Project Reactor", "concurrent"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-063",
+      "query": "What are the differences between Flyway and Liquibase for schema migration?",
+      "intent": "comparison",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Flyway uses SQL or Java migration scripts with checksum validation",
+        "Liquibase uses XML/YAML/JSON changesets with rollback support",
+        "Both integrate with Spring Boot auto-configuration",
+        "Flyway simpler for SQL-first teams; Liquibase better for complex rollback needs"
+      ],
+      "expected_chunk_keywords": ["Flyway", "Liquibase", "schema migration", "database versioning", "rollback", "changeset", "migration script"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-064",
+      "query": "What is the difference between JPA optimistic and pessimistic locking?",
+      "intent": "comparison",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Optimistic locking uses @Version column checked at commit time — no DB lock held",
+        "Pessimistic locking uses SELECT FOR UPDATE — holds DB lock for transaction duration",
+        "Optimistic locking better for low-contention read-heavy scenarios",
+        "@Lock(LockModeType.PESSIMISTIC_WRITE) on repository method for pessimistic"
+      ],
+      "expected_chunk_keywords": ["optimistic locking", "pessimistic locking", "@Version", "SELECT FOR UPDATE", "@Lock", "LockModeType", "concurrency control"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-065",
+      "query": "What are the differences between Spring AOP JDK proxy and CGLIB proxy?",
+      "intent": "comparison",
+      "spring_module": "aop",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "JDK dynamic proxy requires target to implement interface, proxies through interface methods",
+        "CGLIB creates subclass of target class, works without interface",
+        "Spring uses CGLIB by default since 4.0 even for interface-bearing classes",
+        "Final classes/methods cannot be CGLIB-proxied"
+      ],
+      "expected_chunk_keywords": ["JDK proxy", "CGLIB proxy", "proxyTargetClass", "interface", "final class", "Spring AOP", "proxy creation"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-066",
+      "query": "What is the difference between Spring Data JPA and Spring Data JDBC?",
+      "intent": "comparison",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Spring Data JPA uses Hibernate/ORM with lazy loading, caching, complex relationships",
+        "Spring Data JDBC is simpler: no lazy loading, no session cache, no ORM overhead",
+        "JDBC follows aggregate pattern — load complete aggregates at once",
+        "JDBC better performance predictability; JPA better for complex domain models"
+      ],
+      "expected_chunk_keywords": ["Spring Data JPA", "Spring Data JDBC", "ORM", "lazy loading", "aggregate model", "Hibernate", "performance"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-067",
+      "query": "How did Spring Security HttpSecurity configuration change from Security 5 to 6?",
+      "intent": "comparison",
+      "spring_module": "security",
+      "spring_version": "6.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Security 5: chainable method calls (http.authorizeRequests().antMatchers().and().csrf())",
+        "Security 6: lambda DSL required (http.authorizeHttpRequests(auth -> ...).csrf(csrf -> ...))",
+        "Security 6: antMatchers() removed, use requestMatchers()",
+        "andHttpBasic() replaced by httpBasic(Customizer.withDefaults())"
+      ],
+      "expected_chunk_keywords": ["HttpSecurity lambda DSL", "authorizeHttpRequests", "requestMatchers", "antMatchers removed", "Security 6", "method chaining"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-068",
+      "query": "When should you use @Cacheable, @CachePut, and @CacheEvict?",
+      "intent": "comparison",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "@Cacheable: cache-aside — returns cached value if present, stores result on miss",
+        "@CachePut: write-through — always executes method and updates cache",
+        "@CacheEvict: removes entry from cache on method execution",
+        "Combine @Caching to apply multiple cache annotations to one method"
+      ],
+      "expected_chunk_keywords": ["@Cacheable", "@CachePut", "@CacheEvict", "cache-aside", "write-through", "eviction", "@Caching"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-069",
+      "query": "What is the difference between @Configuration full mode and @Component lite mode for @Bean?",
+      "intent": "comparison",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Full @Configuration: CGLIB subclass intercepts @Bean method calls — returns same singleton",
+        "Lite mode (@Component with @Bean): no CGLIB proxy — inter-bean method calls create new instances",
+        "proxyBeanMethods=false on @Configuration opts into lite mode for performance",
+        "Always use full @Configuration when @Bean methods call each other"
+      ],
+      "expected_chunk_keywords": ["proxyBeanMethods", "full @Configuration", "lite mode", "@Component @Bean", "CGLIB", "singleton", "inter-bean call"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-070",
+      "query": "What are the differences between embedded Tomcat, Jetty, and Undertow in Spring Boot?",
+      "intent": "comparison",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Tomcat is the default embedded server in spring-boot-starter-web",
+        "Jetty has smaller memory footprint; exclude Tomcat and add spring-boot-starter-jetty",
+        "Undertow is NIO-based, performant for non-blocking use cases",
+        "Switch servers by excluding spring-boot-starter-tomcat and adding desired starter"
+      ],
+      "expected_chunk_keywords": ["embedded Tomcat", "Jetty", "Undertow", "spring-boot-starter-tomcat", "server", "NIO", "memory footprint"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-071",
+      "query": "What are the differences between @PostConstruct, InitializingBean, and @Bean(initMethod)?",
+      "intent": "comparison",
+      "spring_module": "core",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "@PostConstruct is JSR-250 (jakarta.annotation) — portable, preferred",
+        "InitializingBean.afterPropertiesSet() is Spring-specific coupling",
+        "@Bean(initMethod='init') for third-party classes you cannot annotate",
+        "All called after dependency injection; @PostConstruct before afterPropertiesSet()"
+      ],
+      "expected_chunk_keywords": ["@PostConstruct", "InitializingBean", "afterPropertiesSet", "@Bean initMethod", "bean initialization", "JSR-250"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-072",
+      "query": "When should you use Spring Security form login vs HTTP Basic vs JWT?",
+      "intent": "comparison",
+      "spring_module": "security",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Form login for browser-based applications with session cookies",
+        "HTTP Basic for simple machine-to-machine APIs (HTTPS required)",
+        "JWT for stateless REST APIs and SPAs — no server-side session",
+        "OAuth2 + JWT for federated identity and third-party integrations"
+      ],
+      "expected_chunk_keywords": ["form login", "HTTP Basic", "JWT", "stateless", "session", "OAuth2", "authentication mechanism"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-073",
+      "query": "What is the difference between Micrometer and OpenTelemetry for Spring observability?",
+      "intent": "comparison",
+      "spring_module": "boot",
+      "spring_version": "boot-3.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Micrometer is the metrics facade in Spring (analogous to SLF4J for logging)",
+        "OpenTelemetry provides distributed tracing plus metrics plus logs",
+        "micrometer-tracing-bridge-otel bridges Micrometer Tracing API to OTel backend",
+        "Spring AI uses OTel GenAI semantic conventions for LLM span attributes"
+      ],
+      "expected_chunk_keywords": ["Micrometer", "OpenTelemetry", "micrometer-tracing-bridge-otel", "distributed tracing", "GenAI conventions", "metrics facade"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-074",
+      "query": "What changed in Spring Batch from version 4.x to 5.x to 6.x?",
+      "intent": "comparison",
+      "spring_module": "batch",
+      "spring_version": "6.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Batch 4.x: Spring Boot 2.x, Java 8+, javax.* annotations",
+        "Batch 5.x: Spring Boot 3.x, Java 17 baseline, jakarta.* annotations, @EnableBatchProcessing optional in Boot 3",
+        "Batch 6.x: Spring Boot 4.x, Java 21 baseline; incompatible with Boot 3",
+        "Always align Batch version with Spring Boot major version"
+      ],
+      "expected_chunk_keywords": ["Spring Batch 5", "Spring Batch 6", "Java 17", "Java 21", "@EnableBatchProcessing", "jakarta annotations", "version alignment"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-075",
+      "query": "What is the difference between @EventListener and @ApplicationModuleListener in Spring Modulith?",
+      "intent": "comparison",
+      "spring_module": "modulith",
+      "spring_version": "6.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "@EventListener is standard Spring — not persisted, no retry on failure",
+        "@ApplicationModuleListener persists event to event_publication table before delivery",
+        "@ApplicationModuleListener auto-retries failed listeners for at-least-once delivery",
+        "Spring Modulith event system provides durability guarantees missing from @EventListener"
+      ],
+      "expected_chunk_keywords": ["@ApplicationModuleListener", "@EventListener", "event_publication", "at-least-once delivery", "Modulith", "durability", "retry"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-076",
+      "query": "What are the best practices for Spring Boot externalized configuration?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Use @ConfigurationProperties over @Value for grouped config",
+        "Never store secrets in application.yml — use environment variables or secrets manager",
+        "spring.config.import=optional:configserver: for Config Server",
+        "Use spring.profiles.active for environment-specific overrides"
+      ],
+      "expected_chunk_keywords": ["externalized configuration", "@ConfigurationProperties", "secrets management", "spring.config.import", "profiles", "environment variables"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-077",
+      "query": "What are the best practices for Spring Security password encoding?",
+      "intent": "best_practice",
+      "spring_module": "security",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "Always use BCryptPasswordEncoder or Argon2 — never plain text or MD5/SHA",
+        "BCrypt work factor 10-12 balances security and performance",
+        "DelegatingPasswordEncoder supports multiple encoders with {bcrypt} prefix for migration",
+        "PasswordEncoder.encode() on registration, matches() on authentication"
+      ],
+      "expected_chunk_keywords": ["BCryptPasswordEncoder", "PasswordEncoder", "DelegatingPasswordEncoder", "bcrypt", "password hashing", "Argon2"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-078",
+      "query": "How do you prevent and fix the JPA N+1 query problem?",
+      "intent": "best_practice",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "N+1 occurs when lazy collection is accessed per entity in a loop",
+        "Fix with JOIN FETCH in JPQL: 'SELECT u FROM User u JOIN FETCH u.orders'",
+        "@EntityGraph on repository method specifies fetch strategy",
+        "Enable Hibernate SQL logging to detect N+1: spring.jpa.show-sql=true"
+      ],
+      "expected_chunk_keywords": ["N+1 problem", "JOIN FETCH", "@EntityGraph", "lazy loading", "FetchType.EAGER", "Hibernate SQL logging", "batch fetching"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-079",
+      "query": "What are the best practices for Spring Boot production configuration?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": "boot-3.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Enable graceful shutdown: server.shutdown=graceful",
+        "Configure actuator with security: management.server.port=8081 on internal network",
+        "Set JVM max heap appropriate for container memory limits",
+        "Externalize all credentials with SPRING_DATASOURCE_URL style env vars"
+      ],
+      "expected_chunk_keywords": ["graceful shutdown", "actuator security", "production configuration", "JVM memory", "externalized config", "management.server.port"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-080",
+      "query": "What are the best practices for designing Spring Data JPA repositories?",
+      "intent": "best_practice",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "One repository per aggregate root — avoid spanning multiple entities",
+        "Use projections (interface or DTO) for read-only queries to limit SELECT columns",
+        "Separate read repositories from write repositories for CQRS-lite",
+        "@Transactional(readOnly=true) on query methods for read-only hint to Hibernate"
+      ],
+      "expected_chunk_keywords": ["aggregate root", "repository design", "projection", "CQRS", "@Transactional readOnly", "Spring Data JPA", "query optimization"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-081",
+      "query": "What are the best practices for Spring Boot REST API exception handling?",
+      "intent": "best_practice",
+      "spring_module": "mvc",
+      "spring_version": "boot-3.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Use @RestControllerAdvice for centralized exception handling",
+        "Return ProblemDetail (RFC 7807) for machine-readable error responses (Boot 3+)",
+        "Map domain exceptions to HTTP status codes — never expose stack traces",
+        "Log server errors with correlation ID from OTel trace context"
+      ],
+      "expected_chunk_keywords": ["@RestControllerAdvice", "@ExceptionHandler", "ProblemDetail", "RFC 7807", "error response", "HTTP status", "correlation ID"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-082",
+      "query": "What are the best practices for Spring transaction management?",
+      "intent": "best_practice",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Apply @Transactional at service layer, not controller or repository",
+        "@Transactional(readOnly=true) on all read-only service methods",
+        "Avoid catching exceptions inside @Transactional (prevents rollback)",
+        "Self-invocation bypasses @Transactional — inject self or restructure"
+      ],
+      "expected_chunk_keywords": ["@Transactional", "service layer", "readOnly", "self-invocation", "rollback", "transaction boundary", "OSIV"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-083",
+      "query": "What are Spring Boot security hardening best practices?",
+      "intent": "best_practice",
+      "spring_module": "security",
+      "spring_version": "6.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Enable HSTS: http.headers(h -> h.httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true)))",
+        "Set Content-Security-Policy header to prevent XSS",
+        "Disable X-Frame-Options ALLOW for non-iframe apps",
+        "Use management.server.port for separate actuator network to restrict admin access"
+      ],
+      "expected_chunk_keywords": ["HSTS", "Content-Security-Policy", "X-Frame-Options", "security headers", "HeadersConfigurer", "actuator security", "XSS"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-084",
+      "query": "What are the best practices for containerizing Spring Boot applications?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": "boot-3.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Use multi-stage Dockerfile: Maven/Gradle build stage + JRE runtime stage",
+        "Leverage Spring Boot layered JARs for optimal Docker layer caching",
+        "Set -Xmx to 75% of container memory limit",
+        "Non-root USER in Dockerfile; EXPOSE the application port"
+      ],
+      "expected_chunk_keywords": ["multi-stage Dockerfile", "layered JAR", "spring-boot:build-image", "Buildpacks", "JVM memory", "non-root user", "Docker"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-085",
+      "query": "What are the best practices for testing Spring Boot applications?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Use test pyramid: many unit tests, fewer slice tests, few full @SpringBootTest",
+        "Prefer Testcontainers over in-memory H2 for realistic DB testing",
+        "Use @WebMvcTest for controller tests with @MockBean for service dependencies",
+        "Avoid @SpringBootTest unless full context integration is needed"
+      ],
+      "expected_chunk_keywords": ["test pyramid", "Testcontainers", "@WebMvcTest", "@DataJpaTest", "unit test", "slice test", "@MockBean", "H2 vs Testcontainers"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-086",
+      "query": "What are the best practices for HikariCP connection pool tuning?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Set maximum-pool-size based on database thread count: (CPU_cores * 2) + disk spindles",
+        "idle-timeout evicts connections not used for 10 minutes by default",
+        "connection-timeout (30s default) should be less than network timeout",
+        "Monitor pool metrics via spring.datasource.hikari.pool-name and Micrometer"
+      ],
+      "expected_chunk_keywords": ["HikariCP", "maximum-pool-size", "connection-timeout", "idle-timeout", "pool tuning", "Micrometer", "datasource metrics"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-087",
+      "query": "What are the best practices for Spring Security in stateless REST APIs?",
+      "intent": "best_practice",
+      "spring_module": "security",
+      "spring_version": "6.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Disable CSRF (stateless — no cookies): csrf(csrf -> csrf.disable())",
+        "Configure CORS for SPA origin: CorsConfigurationSource @Bean",
+        "Use OAuth2 Resource Server for JWT validation: oauth2ResourceServer(oauth2 -> oauth2.jwt(...))",
+        "Rate limiting at gateway or via Resilience4j @RateLimiter"
+      ],
+      "expected_chunk_keywords": ["stateless REST", "CSRF disabled", "CORS", "OAuth2 Resource Server", "JWT", "rate limiting", "SecurityFilterChain"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-088",
+      "query": "What are the performance best practices for Spring AOP?",
+      "intent": "best_practice",
+      "spring_module": "aop",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Narrow pointcut expressions to avoid scanning all methods",
+        "Prefer @Around only when you need both pre and post behavior — use @Before/@After when possible",
+        "AspectJ weave-time weaving faster than Spring proxy-based AOP at runtime",
+        "Avoid AOP on frequently-called fine-grained methods (per-call overhead)"
+      ],
+      "expected_chunk_keywords": ["Spring AOP performance", "narrow pointcut", "@Around", "AspectJ", "proxy overhead", "weaving", "execution pointcut"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-089",
+      "query": "What are the best practices for Spring Boot observability with OpenTelemetry in Boot 4?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": "boot-4.x",
+      "version_sensitive": true,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Boot 4 removes Tracer auto-config — manually wire OpenTelemetrySdk + OtelTracer",
+        "Do not call buildAndRegisterGlobal() in multi-context tests (causes conflict)",
+        "Include traceId/spanId in log pattern: %X{traceId}",
+        "For LLM calls follow OTel GenAI semantic conventions: gen_ai.system, gen_ai.usage.input_tokens"
+      ],
+      "expected_chunk_keywords": ["OpenTelemetry", "OtelTracer", "OpenTelemetrySdk", "traceId", "GenAI semantic conventions", "log correlation", "Boot 4 tracing"],
+      "chunk_ids": [],
+      "notes": "Boot 4 breaking change for tracing"
+    },
+    {
+      "id": "c1-090",
+      "query": "What are the best practices for using Resilience4j Circuit Breaker in Spring Boot?",
+      "intent": "best_practice",
+      "spring_module": "cloud",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Configure separate circuit breakers for external services (LLM, DB, TEI)",
+        "Use two-level timeout: TTFT timeout short (circuit breaker), total stream timeout long (not circuit breaker)",
+        "Provide fallback method that returns cached/degraded response",
+        "Monitor circuit breaker state via Actuator and Micrometer metrics"
+      ],
+      "expected_chunk_keywords": ["Resilience4j", "@CircuitBreaker", "fallback", "timeout", "circuit breaker state", "spring-cloud-starter-circuitbreaker-resilience4j"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-091",
+      "query": "What are the best practices for Spring Session with Redis?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Use spring-session-data-redis for HTTP session storage in Redis",
+        "Set spring.session.timeout for session expiration",
+        "Configure spring.session.redis.namespace to avoid key collisions",
+        "Serialize sessions as JSON (not Java serialization) for portability"
+      ],
+      "expected_chunk_keywords": ["Spring Session", "spring-session-data-redis", "session timeout", "Redis", "session serialization", "spring.session.redis.namespace"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-092",
+      "query": "What are the best practices for configuring Spring Boot graceful shutdown?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": "boot-2.3",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "server.shutdown=graceful (default IMMEDIATE — change to GRACEFUL)",
+        "spring.lifecycle.timeout-per-shutdown-phase=30s gives in-flight requests time to complete",
+        "In Kubernetes: terminationGracePeriodSeconds should exceed Spring's shutdown timeout",
+        "Actuator /actuator/shutdown endpoint for programmatic shutdown"
+      ],
+      "expected_chunk_keywords": ["graceful shutdown", "server.shutdown=graceful", "spring.lifecycle.timeout-per-shutdown-phase", "terminationGracePeriodSeconds", "Kubernetes", "in-flight requests"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-093",
+      "query": "What are the best practices for Spring Data JPA query optimization?",
+      "intent": "best_practice",
+      "spring_module": "data",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Use DTO projections to select only needed columns — avoids fetching unnecessary data",
+        "FETCH JOIN in @Query eliminates N+1 for collections",
+        "Enable Hibernate second-level cache for frequently-read reference data",
+        "Use spring.jpa.properties.hibernate.jdbc.batch_size=50 for bulk inserts"
+      ],
+      "expected_chunk_keywords": ["JPA optimization", "DTO projection", "FETCH JOIN", "second-level cache", "batch insert", "hibernate.jdbc.batch_size", "N+1"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-094",
+      "query": "What are the best practices for CORS configuration when serving a SPA?",
+      "intent": "best_practice",
+      "spring_module": "security",
+      "spring_version": "6.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Define CorsConfigurationSource @Bean for Spring Security CORS (not just MVC CORS)",
+        "Set allowedOrigins from environment variable — never hardcode in production",
+        "allowCredentials=true requires explicit allowedOrigins (not wildcard)",
+        "Include all needed HTTP methods (GET, POST, PUT, DELETE, OPTIONS)"
+      ],
+      "expected_chunk_keywords": ["CORS", "CorsConfigurationSource", "allowedOrigins", "allowCredentials", "SPA", "OPTIONS preflight", "Spring Security CORS"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-095",
+      "query": "What are the best practices for designing Spring Modulith application modules?",
+      "intent": "best_practice",
+      "spring_module": "modulith",
+      "spring_version": "6.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "One Java package per module at direct sub-package of app root",
+        "Public types in module root package form the module's API",
+        "internal sub-package for implementation details hidden from other modules",
+        "Communicate across modules only via events (published in @Transactional) or public API calls"
+      ],
+      "expected_chunk_keywords": ["Spring Modulith", "@ApplicationModule", "internal package", "module API", "event-driven", "allowedDependencies", "aggregate boundary"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-096",
+      "query": "What are the best practices for Spring Boot input validation?",
+      "intent": "best_practice",
+      "spring_module": "mvc",
+      "spring_version": null,
+      "version_sensitive": false,
+      "difficulty": "easy",
+      "expected_answer_points": [
+        "Annotate @RequestBody parameters with @Valid to trigger Bean Validation",
+        "@Validated on service class enables method-level validation (JSR-303)",
+        "@NotNull, @Size, @Email etc. on DTO fields",
+        "Handle MethodArgumentNotValidException in @ControllerAdvice for user-friendly error messages"
+      ],
+      "expected_chunk_keywords": ["@Valid", "@Validated", "@NotNull", "Bean Validation", "MethodArgumentNotValidException", "ConstraintViolationException", "@RequestBody validation"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-097",
+      "query": "What are the best practices for Spring Boot database migration strategy?",
+      "intent": "best_practice",
+      "spring_module": "data",
+      "spring_version": "boot-3.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Use Flyway or Liquibase — never ddl-auto=update or create in production",
+        "Flyway: version scripts (V1__, V2__) + repeatable scripts (R__)",
+        "Test migrations with Testcontainers in CI before deploying",
+        "Set spring.flyway.baseline-on-migrate=true for existing databases"
+      ],
+      "expected_chunk_keywords": ["Flyway", "Liquibase", "ddl-auto none", "migration script", "baseline-on-migrate", "Testcontainers CI", "schema versioning"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-098",
+      "query": "What are the best practices for custom Micrometer metrics in Spring Boot?",
+      "intent": "best_practice",
+      "spring_module": "boot",
+      "spring_version": "boot-3.x",
+      "version_sensitive": false,
+      "difficulty": "medium",
+      "expected_answer_points": [
+        "Add common tags via MeterRegistryCustomizer @Bean: application name, environment",
+        "Use @Timed on @RequestMapping methods for automatic latency measurement",
+        "Counter for event counts, Timer for latency, Gauge for current state",
+        "Export P95/P99 percentiles for SLO tracking: management.metrics.distribution.percentiles-histogram"
+      ],
+      "expected_chunk_keywords": ["Micrometer", "MeterRegistryCustomizer", "@Timed", "Timer", "Counter", "Gauge", "percentiles-histogram", "common tags"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-099",
+      "query": "What are the best practices for Spring AI RAG pipeline implementation?",
+      "intent": "best_practice",
+      "spring_module": "ai",
+      "spring_version": "boot-4.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Use Contextual Retrieval: prepend each chunk with context summary before indexing",
+        "Implement Prompt Caching: stable system prompt + knowledge context first, user query last",
+        "Always cite sources with H-14: include license and URL in every answer",
+        "Two-tier timeout: TTFT 5s for circuit breaker, 90-120s for full streaming response"
+      ],
+      "expected_chunk_keywords": ["RAG", "Contextual Retrieval", "Prompt Caching", "source citation", "TTFT timeout", "circuit breaker", "Spring AI", "vector search"],
+      "chunk_ids": [],
+      "notes": null
+    },
+    {
+      "id": "c1-100",
+      "query": "What are the best practices for preventing indirect prompt injection in RAG systems?",
+      "intent": "best_practice",
+      "spring_module": "ai",
+      "spring_version": "boot-4.x",
+      "version_sensitive": false,
+      "difficulty": "hard",
+      "expected_answer_points": [
+        "Wrap retrieved content in clearly marked untrusted sections: <retrieved_content> tags",
+        "Do not grant tool-calling capabilities to the RAG answer path",
+        "Validate and sanitize user queries before embedding and retrieval",
+        "Monitor for adversarial patterns in retrieved content with entry-point detection"
+      ],
+      "expected_chunk_keywords": ["prompt injection", "RAG security", "untrusted content", "tool calling", "content sanitization", "indirect injection", "security"],
+      "chunk_ids": [],
+      "notes": null
+    }
+  ]
+}

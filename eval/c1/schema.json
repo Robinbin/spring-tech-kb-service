@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://springtechkb/eval/c1/schema.json",
+  "title": "Spring Tech KB Eval Set — IC-6 Format v1.0",
+  "description": "评测集格式规范（IC-6 接口契约）。C2/C3 及后续所有调参均依赖此格式；变更须走评审。",
+  "type": "object",
+  "required": ["schema_version", "created_at", "total_samples", "version_sensitive_count",
+               "intent_distribution", "samples"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "格式版本，变更时递增 minor（新增字段）或 major（破坏性变更）",
+      "pattern": "^c1-v\\d+\\.\\d+$"
+    },
+    "created_at": {"type": "string", "format": "date"},
+    "description": {"type": "string"},
+    "total_samples": {"type": "integer", "minimum": 1},
+    "version_sensitive_count": {"type": "integer", "minimum": 0},
+    "intent_distribution": {
+      "type": "object",
+      "required": ["concept", "source_code", "comparison", "best_practice"],
+      "properties": {
+        "concept":       {"type": "integer"},
+        "source_code":   {"type": "integer"},
+        "comparison":    {"type": "integer"},
+        "best_practice": {"type": "integer"}
+      }
+    },
+    "samples": {
+      "type": "array",
+      "minItems": 100,
+      "items": {
+        "type": "object",
+        "required": ["id", "query", "intent", "spring_module", "spring_version",
+                     "version_sensitive", "difficulty", "expected_answer_points",
+                     "expected_chunk_keywords", "chunk_ids"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "唯一样本 ID，格式 c1-NNN",
+            "pattern": "^c1-\\d{3}$"
+          },
+          "query": {
+            "type": "string",
+            "description": "用户查询文本（自然语言）",
+            "minLength": 10
+          },
+          "intent": {
+            "type": "string",
+            "description": "查询意图分类",
+            "enum": ["concept", "source_code", "comparison", "best_practice"]
+          },
+          "spring_module": {
+            "type": "string",
+            "description": "主要涉及的 Spring 子模块",
+            "enum": ["core", "mvc", "boot", "data", "security", "aop", "batch", "cloud", "modulith", "ai"]
+          },
+          "spring_version": {
+            "type": ["string", "null"],
+            "description": "相关的 Spring/Boot 版本标签（null = 所有版本通用）"
+          },
+          "version_sensitive": {
+            "type": "boolean",
+            "description": "答案是否因版本不同而有实质差异（true 时版本误配率指标有意义）"
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": ["easy", "medium", "hard"]
+          },
+          "expected_answer_points": {
+            "type": "array",
+            "description": "良好答案必须涵盖的关键事实点，供 LLM-judge 评分",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 8
+          },
+          "expected_chunk_keywords": {
+            "type": "array",
+            "description": "相关 chunk 应包含的关键词，供无 chunk_ids 时做关键词召回近似评估",
+            "items": {"type": "string"},
+            "minItems": 2,
+            "maxItems": 8
+          },
+          "chunk_ids": {
+            "type": "array",
+            "description": "D5 内容入库后填充的预期 chunk UUID 列表；空数组时降级为关键词召回",
+            "items": {"type": "string", "format": "uuid"}
+          },
+          "notes": {
+            "type": ["string", "null"],
+            "description": "标注说明，如边界情况、争议点、版本说明"
+          }
+        }
+      }
+    }
+  }
+}

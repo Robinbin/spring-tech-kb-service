@@ -1,0 +1,229 @@
+openapi: 3.1.0
+info:
+  title: Spring Tech KB Phase 4 APIs
+  version: 1.0.0
+  description: Bounded knowledge ingestion, learning achievements, and aggregate operations reporting.
+servers:
+  - url: /
+security:
+  - bearerAuth: []
+paths:
+  /api/knowledge/crawl/catalog:
+    get:
+      summary: List enabled official-document catalog entries
+      description: Requires an authenticated ADMIN. Returns metadata and canonical URLs only.
+      responses:
+        "200":
+          description: Catalog entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/KnowledgeCatalogEntry"
+        "403":
+          description: Caller is not an ADMIN
+  /api/knowledge/crawl:
+    post:
+      summary: Crawl selected official documentation
+      description: >
+        Requires an authenticated ADMIN. A synchronous, fixed-catalog operation, not a URL fetch proxy.
+        At most three pages per request and one page per catalog key; each response body is capped at
+        512 KiB and extracted text at 12,000 characters. An operator must provide the reference for
+        the actual legal approval; catalog metadata itself is not evidence of legal review.
+      x-required-role: ADMIN
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [sourceKeys, maxSources, approvalReference]
+              properties:
+                sourceKeys:
+                  type: array
+                  minItems: 1
+                  maxItems: 3
+                  uniqueItems: true
+                  items:
+                    type: string
+                    enum: [spring-cloud, spring-batch, spring-integration]
+                maxSources:
+                  type: integer
+                  minimum: 1
+                  maximum: 3
+                  description: Caller-selected hard cap; sourceKeys count must not exceed it.
+                approvalReference:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+                  description: Existing legal/reviewer approval reference, stored with each ingested source.
+      responses:
+        "200":
+          description: Synchronous crawl results
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [processedSources, results]
+                properties:
+                  processedSources:
+                    type: integer
+                    maximum: 3
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sourceKey: { type: string }
+                        status: { type: string, enum: [UNCHANGED, INGESTED] }
+                        sourceId: { type: string, format: uuid, nullable: true }
+                        chunkCount: { type: integer, minimum: 0 }
+                        contentHash: { type: string, nullable: true }
+        "400":
+          description: Invalid cap, duplicate key, unknown key, or missing approval reference
+        "403":
+          description: Caller is not an ADMIN
+  /api/achievements:
+    get:
+      summary: Get the authenticated user's achievements and learning streak
+      description: >
+        Awards are derived idempotently from completed learning tasks, assessment activity, and
+        skill mastery records. No other user's identity or profile data is returned.
+      responses:
+        "200":
+          description: Personal achievement snapshot
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  achievements:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code: { type: string }
+                        title: { type: string }
+                        description: { type: string }
+                        awardedAt: { type: string, format: date-time }
+                  currentStreakDays: { type: integer, minimum: 0 }
+                  completedTasks: { type: integer, minimum: 0 }
+                  completedAssessments: { type: integer, minimum: 0 }
+                  masteredTopics: { type: integer, minimum: 0 }
+                  leaderboardOptedIn: { type: boolean }
+                  displayAlias: { type: string, nullable: true }
+  /api/achievements/leaderboard:
+    get:
+      summary: List opt-in leaderboard aliases
+      description: >
+        Requires authentication. Only explicitly opted-in, active accounts are considered.
+        Results contain generated aliases and aggregate activity counts only, never IDs, emails,
+        usernames, or other profile attributes.
+      parameters:
+        - in: query
+          name: days
+          schema: { type: integer, minimum: 7, maximum: 30, default: 30 }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 50, default: 20 }
+      responses:
+        "200":
+          description: Opt-in leaderboard
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    displayAlias: { type: string }
+                    score: { type: integer }
+                    activeDays: { type: integer }
+                    completedTasks: { type: integer }
+                    completedAssessments: { type: integer }
+    put:
+      summary: Set the authenticated user's leaderboard opt-in
+      description: Alias is generated by the service; callers cannot supply a username or display name.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [optedIn]
+              properties:
+                optedIn: { type: boolean }
+      responses:
+        "200":
+          description: Updated privacy preference and alias (alias is null when opted out)
+  /api/operations/summary:
+    get:
+      summary: Get aggregate LLM cost and resilience summary
+      description: >
+        ADMIN-only, aggregate-only output. Does not expose user IDs, traces, prompts, content, or operation
+        labels. Missing pricing remains null and is counted separately; cache and batch ratios are null
+        when their denominator is zero. Only the bounded 1-30 day window is queried.
+      x-required-role: ADMIN
+      parameters:
+        - in: query
+          name: days
+          schema: { type: integer, minimum: 1, maximum: 30, default: 7 }
+      responses:
+        "200":
+          description: Operations summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  windowStart: { type: string, format: date-time }
+                  windowEnd: { type: string, format: date-time }
+                  windowDays: { type: integer }
+                  byModelTier:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        modelTier: { type: string }
+                        calls: { type: integer }
+                        inputTokens: { type: integer }
+                        outputTokens: { type: integer }
+                        cacheReadTokens: { type: integer }
+                        cacheReadRatio:
+                          type: number
+                          nullable: true
+                          description: cacheReadTokens / (cacheReadTokens + inputTokens)
+                        batchCalls: { type: integer }
+                        batchShare: { type: number, nullable: true }
+                        knownCostUsd: { type: number, nullable: true }
+                        unknownCostCalls: { type: integer }
+                        errorCalls: { type: integer }
+                  circuitBreakers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: { type: string }
+                        state: { type: string, enum: [CLOSED, OPEN, HALF_OPEN, DISABLED, FORCED_OPEN, METRICS_ONLY, NOT_INITIALIZED] }
+        "400":
+          description: Window exceeds the configured bound
+        "403":
+          description: Caller is not an ADMIN
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    KnowledgeCatalogEntry:
+      type: object
+      properties:
+        sourceKey: { type: string }
+        title: { type: string }
+        sourceUri: { type: string, format: uri }
+        springModule: { type: string }
+        version: { type: string }
+        licenseType: { type: string, enum: [APACHE_2, OFFICIAL_DOCS] }
+        licenseUrl: { type: string, format: uri }

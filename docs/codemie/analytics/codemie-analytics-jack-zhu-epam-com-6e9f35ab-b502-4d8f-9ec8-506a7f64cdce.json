@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "generatedAt": "2026-10-26T06:46:40.341Z",
+    "rangeLabel": "all",
+    "agents": [
+      "claude"
+    ],
+    "projectFilter": "all",
+    "totals": {
+      "sessions": 1,
+      "durationMs": 36734,
+      "turns": 1,
+      "files": 0,
+      "netLines": 0,
+      "toolCallsTotal": 0,
+      "toolSuccessRate": 0,
+      "totalCostUSD": 0,
+      "cacheReadCostUSD": 0,
+      "pricedSessions": 0
+    },
+    "unpricedModels": [],
+    "estimatedModels": [],
+    "localModels": [],
+    "coverage": [
+      {
+        "agentName": "claude",
+        "total": 1,
+        "priced": 0,
+        "withLog": 1
+      }
+    ],
+    "userEmail": "jack_zhu@epam.com",
+    "periodStart": "2026-10-26T06:46:01.111Z",
+    "periodEnd": "2026-10-26T06:46:37.845Z"
+  },
+  "sessions": [
+    {
+      "sessionId": "6e9f35ab-b502-4d8f-9ec8-506a7f64cdce",
+      "agentName": "claude",
+      "provider": "ai-run-sso",
+      "title": "详细审计一个这个技术架构，有不合理的地方，请直接更新到文档上",
+      "project": "/mnt/d/ws/github/spring-tech-kb-service",
+      "branch": "HEAD",
+      "startTime": 1792997161111,
+      "durationMs": 36734,
+      "turns": 1,
+      "fileOps": 0,
+      "linesAdded": 0,
+      "linesRemoved": 0,
+      "linesModified": 0,
+      "netLines": 0,
+      "filesChanged": 0,
+      "filesWritten": 0,
+      "filesEdited": 0,
+      "toolCallsTotal": 0,
+      "toolCallsSuccess": 0,
+      "toolCallsFailure": 0,
+      "models": [
+        "<synthetic>"
+      ],
+      "languages": [],
+      "tools": [],
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheCreation": 0,
+        "cacheCreation1h": 0,
+        "total": 0
+      },
+      "costUSD": 0,
+      "cacheReadCostUSD": 0,
+      "perModelCost": [],
+      "hadLog": true,
+      "agentSessionFile": "/home/jws/.claude/projects/-mnt-d-ws-github-spring-tech-kb-service/907ef33c-6021-46f2-babc-214b21225bea.jsonl",
+      "dispatchesComplete": true,
+      "rootOwnCostUSD": 0,
+      "unlinkedCostUSD": 0,
+      "unlinkedAgentIds": [],
+      "rootOwnTokens": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheCreation": 0,
+        "cacheCreation1h": 0,
+        "total": 0
+      },
+      "unlinkedTokens": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheCreation": 0,
+        "cacheCreation1h": 0,
+        "total": 0
+      },
+      "skillInvocations": [],
+      "agentInvocations": [],
+      "commandInvocations": [],
+      "sessionSource": "Pure chat"
+    }
+  ]
+}

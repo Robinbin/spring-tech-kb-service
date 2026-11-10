@@ -1,0 +1,143 @@
+name: Eval Quality Gate (C1-C3)
+
+on:
+  pull_request:
+    paths:
+      - "src/main/java/com/springtechkb/search/**"
+      - "src/main/java/com/springtechkb/ai/**"
+      - "src/main/resources/db/migration/V3__knowledge.sql"
+      - "src/main/resources/db/migration/V4__vector_store.sql"
+      - "eval/c1/**"
+      - "eval/c2/**"
+      - "eval/c3/**"
+      - ".github/workflows/eval.yml"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Evaluation mode"
+        required: true
+        type: choice
+        options:
+          - online
+          - snapshot
+        default: online
+      snapshot:
+        description: "Snapshot path for snapshot mode"
+        required: false
+        default: "eval/c2/snapshots/latest.json"
+      update_baseline:
+        description: "Update baseline after the quality gate passes"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  dataset-and-tests:
+    name: Validate C1 dataset and C2/C3 code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install evaluation dependencies
+        run: pip install -r eval/c2/requirements.txt
+
+      - name: Validate C1 evaluation set
+        run: python eval/c1/validate_eval_set.py
+
+      - name: Run evaluation tests
+        run: python -m unittest discover -s eval/tests -v
+
+      - name: Replay captured evaluation snapshot when available
+        if: github.event_name == 'pull_request' && hashFiles('eval/c2/snapshots/pr.json') != ''
+        run: |
+          python eval/c2/run_eval.py \
+            --mode snapshot \
+            --snapshot eval/c2/snapshots/pr.json \
+            --skip-judge \
+            --output-dir "$RUNNER_TEMP/eval-results"
+          RESULT=$(ls -t "$RUNNER_TEMP"/eval-results/eval_*.json | head -1)
+          python eval/c3/check_regression.py "$RESULT" \
+            --baseline eval/c3/baseline/latest.json
+
+      - name: Document evaluation dependency on later Epic E APIs
+        if: github.event_name == 'pull_request' && hashFiles('eval/c2/snapshots/pr.json') == ''
+        run: echo "::notice::Retrieval quality replay is not configured; live search/RAG APIs are delivered in Epic E. Dataset validation and evaluator tests passed."
+
+      - name: Upload PR evaluation results
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results-pr-${{ github.run_number }}
+          path: ${{ runner.temp }}/eval-results/
+          if-no-files-found: ignore
+
+  online-quality-gate:
+    name: Online C2 evaluation and C3 regression gate
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install evaluation dependencies
+        run: pip install -r eval/c2/requirements.txt
+
+      - name: Validate C1 evaluation set
+        run: python eval/c1/validate_eval_set.py
+
+      - name: Run C2 evaluation
+        env:
+          EVAL_SERVICE_URL: ${{ vars.EVAL_SERVICE_URL || 'http://localhost:8080' }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RUN_MODE: ${{ inputs.mode }}
+          EVAL_SNAPSHOT_PATH: ${{ inputs.snapshot }}
+        run: |
+          if [ "$RUN_MODE" = "snapshot" ]; then
+            python eval/c2/run_eval.py --mode snapshot \
+              --snapshot "$EVAL_SNAPSHOT_PATH" \
+              --skip-judge \
+              --output-dir "$RUNNER_TEMP/eval-results"
+          else
+            python eval/c2/run_eval.py --mode online \
+              --output-dir "$RUNNER_TEMP/eval-results"
+          fi
+
+      - name: Check C3 thresholds and baseline
+        run: |
+          RESULT=$(ls -t "$RUNNER_TEMP"/eval-results/eval_*.json | head -1)
+          python eval/c3/check_regression.py "$RESULT" \
+            --baseline eval/c3/baseline/latest.json \
+            ${{ inputs.update_baseline && '--update-baseline' || '' }}
+
+      - name: Commit approved baseline update
+        if: inputs.update_baseline
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add eval/c3/baseline/latest.json
+          git diff --staged --quiet || git commit -m "chore(eval): update C3 baseline [skip ci]"
+          git push
+
+      - name: Upload evaluation result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results-${{ github.run_number }}
+          path: ${{ runner.temp }}/eval-results/
+          if-no-files-found: ignore

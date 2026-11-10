@@ -1,0 +1,2102 @@
+[
+  {
+    "id": "d5-ioc-01",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: BeanFactory",
+    "summary": "The BeanFactory is the basic container contract for retrieving managed objects and their dependencies. Review focus: whether lazy lookup is useful for the stated application lifecycle. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-02",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: ApplicationContext",
+    "summary": "ApplicationContext builds on BeanFactory with application-level facilities such as events and resource loading. Review focus: which additional context facilities the application actually uses. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-03",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Bean definition",
+    "summary": "A bean definition describes how the container should create and configure an object rather than being the object itself. Review focus: whether the definition source and resulting scope are explicit. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-04",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Dependency injection",
+    "summary": "Dependency injection lets the container supply collaborators so application classes do not construct their own infrastructure. Review focus: whether required dependencies are expressed as constructor parameters. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-05",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Constructor injection",
+    "summary": "Constructor injection makes required collaborators visible at construction time and supports immutable fields. Review focus: whether the class can be constructed in a valid state without setters. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-06",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Setter injection",
+    "summary": "Setter injection allows optional or replaceable dependencies to be configured after object construction. Review focus: whether an omitted setter leaves the component in a safe state. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-07",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Component scanning",
+    "summary": "Component scanning discovers eligible annotated classes within configured package boundaries. Review focus: whether scan boundaries avoid unintended package coupling. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-08",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Stereotype annotations",
+    "summary": "Stereotypes such as Component, Service, Repository, and Controller provide semantic component roles. Review focus: whether the chosen stereotype matches the component responsibility. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-09",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Bean naming",
+    "summary": "Bean names identify definitions in the container and can be explicit or derived from component metadata. Review focus: whether explicit names are needed to disambiguate candidates. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-10",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Bean scope",
+    "summary": "Scope determines whether the container reuses an instance or creates it according to a broader lifecycle. Review focus: whether the selected scope matches concurrent request usage. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-11",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Singleton scope",
+    "summary": "Singleton scope provides one managed instance per bean definition and container, not a global JVM singleton. Review focus: whether mutable state is safe to share across callers. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-12",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Prototype scope",
+    "summary": "Prototype scope asks the container for a newly created instance whenever that bean is requested. Review focus: who is responsible for cleanup after the container returns it. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-13",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Lazy initialization",
+    "summary": "Lazy initialization postpones creation until first use and can change when configuration errors appear. Review focus: whether delayed failures are acceptable for startup and health checks. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-14",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Bean lifecycle callbacks",
+    "summary": "Lifecycle callbacks allow a bean to react to initialization and destruction within container management. Review focus: whether cleanup is tied to a lifecycle the container can observe. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-15",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: BeanPostProcessor",
+    "summary": "A BeanPostProcessor can inspect or wrap bean instances around initialization throughout the container. Review focus: whether processor ordering affects the bean being customized. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-16",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: FactoryBean",
+    "summary": "A FactoryBean exposes an object produced by a factory while the factory itself remains separately addressable. Review focus: whether consumers need the product or the factory instance. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-17",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Java configuration",
+    "summary": "Configuration classes declare bean definitions in Java and can express dependencies through method parameters. Review focus: whether configuration methods are invoked through container interception. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-18",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Configuration proxying",
+    "summary": "Full configuration mode can intercept bean methods to preserve container-managed references between definitions. Review focus: whether disabling method proxying changes direct method-call behavior. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-19",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Profiles",
+    "summary": "Profiles conditionally activate bean definitions for a named deployment or runtime environment. Review focus: whether the active profile set is explicit in each deployment. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-20",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Conditional beans",
+    "summary": "Conditional registration makes bean availability depend on environment or classpath predicates. Review focus: whether missing conditions fail clearly instead of selecting a fallback. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-21",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Qualifier",
+    "summary": "A qualifier narrows autowiring among candidates without changing the type of the dependency. Review focus: whether the qualifier expresses a stable role rather than incidental naming. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-22",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Primary candidate",
+    "summary": "A primary candidate provides a default choice when multiple beans satisfy the same injection type. Review focus: whether other injection sites still need explicit qualification. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-23",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Optional dependency",
+    "summary": "Optional injection represents a dependency that may legitimately be absent from a context. Review focus: whether absence is modeled explicitly instead of hiding configuration errors. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-24",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Circular dependencies",
+    "summary": "A dependency cycle prevents straightforward construction and often signals responsibilities that should be separated. Review focus: whether the cycle can be removed by extracting a shared collaborator. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-25",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Environment abstraction",
+    "summary": "The Environment combines profiles and property sources behind a common lookup interface. Review focus: whether required properties are validated early. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-26",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Property binding",
+    "summary": "Property binding maps external configuration into structured objects with conversion and validation. Review focus: whether invalid values produce a startup error. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-27",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Resource loading",
+    "summary": "Resource abstractions provide a consistent way to access classpath, filesystem, and URL-backed resources. Review focus: whether resource ownership and stream closing are handled. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-28",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Application events",
+    "summary": "Application events communicate an occurrence to interested listeners within an application context. Review focus: whether listeners require synchronous or durable delivery semantics. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-29",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Event listener ordering",
+    "summary": "Listener ordering controls execution order among listeners but does not itself guarantee transaction durability. Review focus: whether ordering is required and tested explicitly. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-ioc-30",
+    "module": "ioc",
+    "version": "6.2.x",
+    "title": "IoC: Container extension points",
+    "summary": "Container extension points customize definition processing or instance creation at different lifecycle stages. Review focus: whether the extension runs early enough for its intended effect. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/beans.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-01",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Aspect",
+    "summary": "An aspect groups cross-cutting behavior with rules describing where that behavior applies. Review focus: whether the aspect owns one cohesive concern. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-02",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Join point",
+    "summary": "A join point is an execution point that an AOP framework can expose to advice. Review focus: which execution events are interceptable by the configured proxy model. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-03",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Pointcut",
+    "summary": "A pointcut selects join points using a reusable expression over method or type characteristics. Review focus: whether the expression matches only intended application boundaries. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-04",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Advice",
+    "summary": "Advice defines behavior to run before, after, or around selected method executions. Review focus: whether advice preserves the original exception and return contract. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-05",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Before advice",
+    "summary": "Before advice runs prior to a matched invocation and cannot replace its return value. Review focus: whether the operation must proceed when the advice completes. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-06",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: After-returning advice",
+    "summary": "After-returning advice observes successful method completion and can inspect the result. Review focus: whether failures should be handled by a separate advice type. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-07",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: After-throwing advice",
+    "summary": "After-throwing advice observes exceptions escaping a matched invocation. Review focus: whether it logs, translates, or preserves the original exception. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-08",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Around advice",
+    "summary": "Around advice controls whether and how the intercepted invocation proceeds. Review focus: whether proceed is called exactly as many times as intended. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-09",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Proxy-based AOP",
+    "summary": "Spring proxy-based AOP applies advice to calls that pass through a managed proxy. Review focus: whether the caller obtains the proxied bean from the container. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-10",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: JDK dynamic proxy",
+    "summary": "A JDK dynamic proxy exposes advised behavior through interfaces implemented by the target. Review focus: whether consumers depend on an interface rather than the concrete class. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-11",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Class-based proxy",
+    "summary": "A class-based proxy subclasses the target type and therefore has inheritance-related constraints. Review focus: whether final classes or methods prevent interception. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-12",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Self invocation",
+    "summary": "A method calling another method on this bypasses the external proxy boundary in proxy-based AOP. Review focus: whether the call path crosses the proxy. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-13",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Advisor ordering",
+    "summary": "Advisor ordering determines precedence when several interceptors apply to the same invocation. Review focus: whether nesting order is asserted by tests. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-14",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Introduction advice",
+    "summary": "Introduction advice adds an interface capability to a proxy without changing the target class. Review focus: whether the introduced contract is safe for every matching target. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-15",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Method interception",
+    "summary": "Method interception wraps a method invocation and can inspect arguments, result, and failure. Review focus: whether argument mutation or result replacement is documented. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-16",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: AOP proxy exposure",
+    "summary": "Proxy exposure makes the current proxy available to code that must re-enter advised behavior. Review focus: whether refactoring can avoid coupling to the current proxy. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-17",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Transactions and proxies",
+    "summary": "Declarative transaction behavior is commonly applied through an interceptor around proxied calls. Review focus: whether transaction annotations are placed on externally invoked methods. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-18",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Caching and proxies",
+    "summary": "Caching advice intercepts eligible calls and may return a cached result without running the target. Review focus: whether cache keys include every result-affecting input. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-19",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Security advice",
+    "summary": "Method security can enforce authorization at a proxy boundary before protected operations execute. Review focus: whether internal calls can bypass that boundary. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-20",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Annotation pointcuts",
+    "summary": "Annotation pointcuts select methods or types based on runtime-visible annotation metadata. Review focus: whether annotations are present on the method actually inspected. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-21",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: AspectJ expression",
+    "summary": "AspectJ pointcut expressions describe structural patterns that can select methods and types. Review focus: whether package and visibility patterns are narrow enough. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-22",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: AOP proxy identity",
+    "summary": "A proxied bean may have a runtime type different from its target implementation class. Review focus: whether reflection-based code accounts for the proxy type. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-23",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Advice exception behavior",
+    "summary": "Advice can alter exception propagation if it catches, wraps, or fails before proceeding. Review focus: whether callers observe the documented exception type. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-24",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: AOP and final methods",
+    "summary": "Subclass proxies cannot override final methods, limiting interception for those methods. Review focus: whether the selected proxy strategy can advise the method. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-25",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: AOP and private methods",
+    "summary": "Private methods are not overridable proxy interception points for subclass-based proxies. Review focus: whether cross-cutting behavior belongs on a public service boundary. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-26",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Composable advisors",
+    "summary": "Multiple advisors can be combined so that independent concerns apply to a single invocation. Review focus: whether advisor precedence avoids surprising transaction or security scope. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-27",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Proxy creation",
+    "summary": "Auto-proxy creation wraps eligible beans during container initialization. Review focus: whether initialization-time calls happen before the proxy is available. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-28",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: AOP debugging",
+    "summary": "Proxy diagnostics help identify whether a call is advised and which interceptors are applied. Review focus: whether diagnostics avoid exposing sensitive invocation arguments. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-29",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: AOP testing",
+    "summary": "AOP tests should invoke the managed bean through its proxy to verify actual interception. Review focus: whether tests avoid constructing the target directly. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-aop-30",
+    "module": "aop",
+    "version": "6.2.x",
+    "title": "AOP: Cross-cutting boundaries",
+    "summary": "AOP is most predictable when applied at stable application service boundaries. Review focus: whether the pointcut matches a documented architectural seam. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/core/aop.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-01",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: DispatcherServlet",
+    "summary": "DispatcherServlet coordinates request mapping, handler invocation, and response rendering in Spring MVC. Review focus: whether servlet mappings cover the intended application paths. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-02",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Handler mapping",
+    "summary": "Handler mappings select a controller or handler method for an incoming request. Review focus: whether competing mappings are unambiguous. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-03",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Request mapping",
+    "summary": "Request mapping metadata constrains paths, methods, parameters, headers, and media types. Review focus: whether the accepted HTTP methods are intentionally limited. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-04",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Controller method",
+    "summary": "A controller method connects an HTTP request shape to application behavior and a response contract. Review focus: whether business logic is delegated to an application service. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-05",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Path variable",
+    "summary": "A path variable binds a URI template segment to a typed method argument. Review focus: whether conversion errors produce a useful client response. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-06",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Request parameter",
+    "summary": "A request parameter binds query or form data and may have explicit required and default semantics. Review focus: whether missing and empty values are distinguished. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-07",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Request body conversion",
+    "summary": "Message converters deserialize supported request media types into Java values. Review focus: whether unsupported media types are rejected clearly. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-08",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Response body conversion",
+    "summary": "Message converters serialize returned values according to the negotiated response media type. Review focus: whether serialization exposes only intended fields. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-09",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Content negotiation",
+    "summary": "Content negotiation selects a representation using request headers and configured strategies. Review focus: whether unsupported representations return the expected status. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-10",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Validation",
+    "summary": "Bean validation checks bound input against declared constraints before controller logic proceeds. Review focus: whether validation failures are translated consistently. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-11",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Exception advice",
+    "summary": "Controller advice centralizes exception-to-response mapping across selected controllers. Review focus: whether response details avoid leaking internal exception data. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-12",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Controller advice scope",
+    "summary": "Advice selectors limit which controller groups receive shared exception or binding behavior. Review focus: whether package and annotation selectors match intended APIs. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-13",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Interceptors",
+    "summary": "MVC interceptors observe request handling around controller execution within the servlet pipeline. Review focus: whether cross-cutting work belongs in a filter instead. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-14",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Servlet filters",
+    "summary": "Servlet filters operate at the servlet container boundary before MVC handler selection. Review focus: whether filter ordering and URL matching are explicit. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-15",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: CORS configuration",
+    "summary": "CORS configuration controls which browser origins may make cross-origin requests. Review focus: whether allowed origins are restricted outside development. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-16",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Static resources",
+    "summary": "Resource handlers map selected URL patterns to configured static resource locations. Review focus: whether resource mappings can shadow controller routes. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-17",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: View resolution",
+    "summary": "View resolution maps logical view names to rendering technologies in server-rendered applications. Review focus: whether a REST endpoint should return data instead of a view. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-18",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Form binding",
+    "summary": "Form binding populates object properties from request parameters and can be constrained by allowed fields. Review focus: whether binding prevents modification of server-controlled properties. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-19",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Data binder",
+    "summary": "A web data binder converts and binds request values to controller arguments. Review focus: whether custom editors are scoped narrowly. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-20",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Flash attributes",
+    "summary": "Flash attributes preserve short-lived values across a redirect using session-backed support. Review focus: whether sensitive or large objects are excluded. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-21",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Redirect handling",
+    "summary": "Redirect responses instruct the client to issue a subsequent request to another location. Review focus: whether redirect targets are fixed or validated against open redirects. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-22",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Asynchronous MVC",
+    "summary": "Asynchronous request handling releases the servlet thread while a result is produced later. Review focus: whether timeouts and error completion paths are configured. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-23",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Streaming response",
+    "summary": "Streaming responses write data incrementally rather than buffering a complete representation. Review focus: whether client disconnects and partial output are handled. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-24",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: SSE response",
+    "summary": "Server-sent events deliver a sequence of server-to-client events over an HTTP response. Review focus: whether event IDs and reconnect behavior are defined. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-25",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Locale resolution",
+    "summary": "Locale resolution determines the language and regional preferences used during request processing. Review focus: whether locale selection can be influenced safely by the caller. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-26",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: Multipart upload",
+    "summary": "Multipart handling parses uploaded files and form values from a multipart request. Review focus: whether size limits and storage destinations are constrained. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-27",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: HTTP message converter",
+    "summary": "A message converter maps between HTTP representations and Java object values. Review focus: whether converter precedence is intentional for the media type. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-28",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: API error response",
+    "summary": "A stable API error response gives clients a consistent structure for failures and validation issues. Review focus: whether error codes remain stable across implementation changes. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-29",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: MVC test support",
+    "summary": "MVC test support exercises request mapping and response behavior without starting a full server. Review focus: whether security filters and serialization are included when relevant. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-mvc-30",
+    "module": "mvc",
+    "version": "6.2.x",
+    "title": "MVC: REST controller",
+    "summary": "A REST controller combines request handling with response-body serialization for API endpoints. Review focus: whether the response schema is treated as a versioned client contract. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-framework/reference/web/webmvc.html",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-01",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Repository abstraction",
+    "summary": "A repository interface describes persistence operations while delegating implementation to a store module. Review focus: whether the abstraction exposes only required operations. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-02",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: CrudRepository",
+    "summary": "CrudRepository provides common create, read, update, and delete operations for an entity type. Review focus: whether the exposed delete operations fit the application ownership model. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-03",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: PagingAndSortingRepository",
+    "summary": "Paging and sorting repository operations support bounded result retrieval and ordering. Review focus: whether page sizes are capped for untrusted requests. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-04",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Query method derivation",
+    "summary": "Query method derivation interprets method names to create store-specific query behavior. Review focus: whether the method name remains understandable and unambiguous. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-05",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Declared query",
+    "summary": "A declared query makes query text or metadata explicit when derivation is insufficient. Review focus: whether parameters are bound rather than concatenated into query text. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-06",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Projection",
+    "summary": "A projection limits query results to a selected view of entity properties. Review focus: whether the projection avoids loading unnecessary relationships. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-07",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Page request",
+    "summary": "A page request captures page position and size for a bounded result window. Review focus: whether large offsets or page sizes need a different strategy. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-08",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Slice result",
+    "summary": "A slice indicates whether additional results exist without requiring a total-count query. Review focus: whether the caller truly needs a total result count. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-09",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Sort order",
+    "summary": "A sort order describes property-based ordering applied to a query result. Review focus: whether user-provided sort properties are allowlisted. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-10",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Keyset scrolling",
+    "summary": "Keyset scrolling advances through results using stable key values instead of large offsets. Review focus: whether the sort key is unique and stable during traversal. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-11",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Auditing",
+    "summary": "Auditing metadata records actor and time information associated with persistence changes. Review focus: whether the actor context is available in background jobs. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-12",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Optimistic locking",
+    "summary": "Optimistic locking detects concurrent updates by comparing a version marker at write time. Review focus: whether conflicts are surfaced or retried safely. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-13",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Entity callbacks",
+    "summary": "Entity callbacks provide lifecycle hooks around persistence mapping and store operations. Review focus: whether callback work is deterministic and free of external side effects. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-14",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Domain events",
+    "summary": "Domain events publish meaningful occurrences associated with aggregate changes. Review focus: whether delivery must be transactional or durable. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-15",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Transaction boundary",
+    "summary": "A transaction boundary groups related persistence operations under a defined commit or rollback. Review focus: whether all participating resources share the same transaction manager. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-16",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Repository transaction",
+    "summary": "Repository methods may participate in transactions configured by the store integration. Review focus: whether transaction scope is owned by the application service. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-17",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Specification",
+    "summary": "A specification composes reusable predicates for querying entities in supported store modules. Review focus: whether composed predicates preserve expected null and join semantics. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-18",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Query by example",
+    "summary": "Query by example builds matching criteria from a probe object and matching configuration. Review focus: whether default values accidentally become search criteria. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-19",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Entity graph",
+    "summary": "An entity graph declares relationships to fetch for a particular persistence operation. Review focus: whether eager loading is limited to the use case. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-20",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Projection interface",
+    "summary": "An interface projection exposes selected result properties through a typed view. Review focus: whether nested projection behavior produces the expected query. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-21",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Custom repository fragment",
+    "summary": "A repository fragment adds focused custom behavior alongside generated repository methods. Review focus: whether custom implementation ownership remains separate. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-22",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Database migration",
+    "summary": "Database migrations apply versioned schema changes in a controlled and repeatable order. Review focus: whether the migration is safe for existing production data. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-23",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Store module",
+    "summary": "A Spring Data store module provides repository behavior specialized for a persistence technology. Review focus: whether repository scanning is bound to the intended store. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-24",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Reactive repository",
+    "summary": "Reactive repository APIs expose non-blocking publishers for supported reactive stores. Review focus: whether blocking calls are absent from the reactive path. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-25",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Repository event",
+    "summary": "Repository events observe selected persistence lifecycle actions around entity handling. Review focus: whether event timing corresponds to committed database state. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-26",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Pagination stability",
+    "summary": "Stable pagination requires deterministic ordering, particularly when records change between requests. Review focus: whether the ordering includes a unique tie-breaker. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-27",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Bulk update",
+    "summary": "Bulk update queries can bypass normal entity lifecycle callbacks and in-memory state synchronization. Review focus: whether affected persistence contexts are cleared or refreshed. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-28",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Repository testing",
+    "summary": "Repository tests verify query semantics against the persistence behavior used in deployment. Review focus: whether an in-memory substitute differs from the production database. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-29",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Data access exception",
+    "summary": "Data access exception translation provides a technology-neutral hierarchy for persistence failures. Review focus: whether retry decisions distinguish transient from permanent failures. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-data-30",
+    "module": "data",
+    "version": "6.2.x",
+    "title": "Data: Persistence boundary",
+    "summary": "A persistence boundary keeps storage concerns behind application-facing repository contracts. Review focus: whether transaction and consistency requirements are visible to callers. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-data/commons/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-01",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Security filter chain",
+    "summary": "A security filter chain applies authentication and authorization behavior to selected servlet requests. Review focus: whether request matchers cover every protected route. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-02",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Request matcher",
+    "summary": "A request matcher selects requests using path, method, dispatcher, or other request attributes. Review focus: whether matcher order causes an earlier rule to shadow a later one. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-03",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Authentication",
+    "summary": "Authentication represents a principal together with evidence and authorities established by a mechanism. Review focus: whether credentials are removed or protected after authentication. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-04",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Authorization",
+    "summary": "Authorization decides whether an authenticated or anonymous principal may perform an operation. Review focus: whether default-deny behavior is appropriate for unmatched routes. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-05",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Password encoding",
+    "summary": "Password encoding stores a one-way verifier rather than the original password. Review focus: whether the configured encoder uses an adaptive work factor. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-06",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Authentication provider",
+    "summary": "An authentication provider validates a supported authentication request against an identity source. Review focus: whether failure responses avoid revealing account existence. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-07",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: User details service",
+    "summary": "A user details service loads principal data used by authentication providers. Review focus: whether loaded authorities are derived from trusted records. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-08",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Granted authority",
+    "summary": "A granted authority is a permission label consumed by authorization rules. Review focus: whether role prefixes and permission naming are consistent. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-09",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Role hierarchy",
+    "summary": "A role hierarchy can express that one role includes permissions associated with another. Review focus: whether inherited access is documented and least-privilege. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-10",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Method security",
+    "summary": "Method security applies authorization checks at selected service method boundaries. Review focus: whether self-invocation bypasses the proxy-based check. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-11",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Pre-authorization",
+    "summary": "Pre-authorization evaluates an access expression before a method body executes. Review focus: whether expression inputs come from trusted method arguments. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-12",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Post-authorization",
+    "summary": "Post-authorization evaluates access after method execution and can inspect the returned object. Review focus: whether the operation has side effects before denial. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-13",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: CSRF protection",
+    "summary": "CSRF protection validates that state-changing browser requests originate from an expected interaction context. Review focus: whether disabling CSRF is justified for the actual client model. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-14",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: CORS and security",
+    "summary": "CORS processing and security filtering must be ordered so legitimate preflight requests are handled. Review focus: whether preflight requests reach the CORS configuration. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-15",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Session fixation",
+    "summary": "Session fixation protection changes or invalidates session identifiers across authentication transitions. Review focus: whether authentication preserves only intended session data. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-16",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Session management",
+    "summary": "Session management controls concurrent sessions, persistence, and invalidation behavior. Review focus: whether logout invalidates server-side state as well as client cookies. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-17",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Remember-me authentication",
+    "summary": "Remember-me support can restore authentication across browser sessions using persistent evidence. Review focus: whether token theft and revocation risks are addressed. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-18",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: OAuth2 client",
+    "summary": "OAuth2 client support obtains and manages delegated access tokens for outbound resource requests. Review focus: whether scopes are narrowly matched to required operations. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-19",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: OAuth2 resource server",
+    "summary": "A resource server validates presented access tokens before allowing protected API access. Review focus: whether issuer, audience, and signature requirements are verified. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-20",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: JWT validation",
+    "summary": "JWT validation checks cryptographic and claim requirements before trusting token identity data. Review focus: whether expiration and intended audience are enforced. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-21",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Opaque token introspection",
+    "summary": "Opaque token introspection asks an authorization server to validate a token and return its attributes. Review focus: whether introspection failures fail closed. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-22",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Security context",
+    "summary": "The security context holds the current authentication for the active execution strategy. Review focus: whether context propagation is correct across asynchronous work. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-23",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Authentication entry point",
+    "summary": "An authentication entry point determines how unauthenticated access is challenged or rejected. Review focus: whether API clients receive a protocol-appropriate response. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-24",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Access denied handler",
+    "summary": "An access denied handler shapes the response when an authenticated principal lacks permission. Review focus: whether the response distinguishes authorization from authentication failure. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-25",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Security headers",
+    "summary": "Security headers communicate browser-side restrictions and protections in HTTP responses. Review focus: whether configured policies match the application's content and embedding needs. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-26",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Logout handling",
+    "summary": "Logout handling clears authentication state and can invalidate related session or token state. Review focus: whether logout requires CSRF protection for browser clients. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-27",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Security event",
+    "summary": "Security events report authentication or authorization outcomes for monitoring and audit. Review focus: whether event data excludes credentials and sensitive token contents. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-28",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Authentication test support",
+    "summary": "Security test support supplies principals or requests to exercise authorization rules. Review focus: whether tests cover both allowed and denied access cases. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-29",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Security matcher ordering",
+    "summary": "Ordered security rules select the first applicable policy for a request. Review focus: whether a broad permit rule appears before a restrictive rule. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  },
+  {
+    "id": "d5-security-30",
+    "module": "security",
+    "version": "6.2.x",
+    "title": "Security: Least privilege",
+    "summary": "Least privilege limits each principal and service identity to permissions needed for its task. Review focus: whether unused roles or authorities can be removed. Confirm the stated behavior against the cited official documentation and target Spring version before approving this entry.",
+    "source_url": "https://docs.spring.io/spring-security/reference/",
+    "review": {
+      "status": "PENDING",
+      "reviewer": null,
+      "accuracy_score": null,
+      "notes": "Human verification required; not approved for production retrieval."
+    }
+  }
+]

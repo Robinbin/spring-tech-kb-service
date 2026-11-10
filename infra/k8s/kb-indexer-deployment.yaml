@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springkb-kb-indexer
+  labels:
+    app: springkb
+    role: kb-indexer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springkb
+      role: kb-indexer
+  template:
+    metadata:
+      labels:
+        app: springkb
+        role: kb-indexer
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: springkb
+          image: ghcr.io/your-org/spring-tech-kb-service:REPLACE_WITH_IMMUTABLE_TAG
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRINGTECHKB_RUNTIME_ROLE
+              value: kb-indexer
+            - name: SPRINGTECHKB_INGESTION_OUTBOX_METRICS_ENABLED
+              value: "true"
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: springkb-db
+                  key: url
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: springkb-db
+                  key: user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: springkb-db
+                  key: password
+            - name: REDIS_HOST
+              value: springkb-redis
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: springkb-redis
+                  key: password
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "768Mi"
+            limits:
+              cpu: "1"
+              memory: "1536Mi"

@@ -1,0 +1,524 @@
+openapi: 3.1.0
+info:
+  title: Spring Tech KB Phase 2 API
+  version: 1.0.0
+  description: >-
+    Learning, reviewed diagnostics and source-grounded generation.
+    All operations require a bearer JWT. Administrative operations additionally
+    require ADMIN. MCP uses Streamable HTTP at /mcp; its tool schemas are
+    discovered with tools/list, not represented as ordinary REST operations.
+servers:
+  - url: http://localhost:8080
+security:
+  - bearerAuth: []
+paths:
+  /api/knowledge/topics:
+    get:
+      operationId: listKnowledgeTopics
+      responses:
+        '200':
+          description: Topic catalog
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Topic'}
+    post:
+      operationId: createKnowledgeTopic
+      description: Requires ADMIN.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: {type: string, minLength: 1, maxLength: 255}
+                springModule: {type: [string, 'null'], maxLength: 100}
+                description: {type: [string, 'null'], maxLength: 4000}
+      responses:
+        '201':
+          description: Created topic identifier
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id]
+                properties:
+                  id: {type: string, format: uuid}
+  /api/knowledge/topics/{id}/prerequisites:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      operationId: getKnowledgePrerequisites
+      responses:
+        '200':
+          description: Recursive prerequisites in deterministic topological order
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Topic'}
+  /api/knowledge/topics/{id}/prerequisites/{prerequisiteId}:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+      - name: prerequisiteId
+        in: path
+        required: true
+        schema: {type: string, format: uuid}
+    put:
+      operationId: addKnowledgePrerequisite
+      description: Requires ADMIN. Self references and cycles are rejected.
+      responses:
+        '204': {description: Edge added}
+    delete:
+      operationId: removeKnowledgePrerequisite
+      description: Requires ADMIN.
+      responses:
+        '204': {description: Edge removed}
+  /api/learning/plans:
+    get:
+      operationId: listLearningPlans
+      responses:
+        '200':
+          description: Caller-owned plan summaries
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/PlanSummary'}
+    post:
+      operationId: createLearningPlan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [topicIds]
+              properties:
+                topicIds: {$ref: '#/components/schemas/TopicIds'}
+                goal: {type: [string, 'null']}
+      responses:
+        '2XX':
+          description: Generated plan with prerequisite closure and attribution
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Plan'}
+        '409': {description: Graph changed while generating; retry with the current graph}
+        '422': {description: Missing approved topic evidence or invalid generated plan}
+  /api/learning/plans/{id}:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      operationId: getLearningPlan
+      responses:
+        '200':
+          description: Caller-owned plan
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Plan'}
+        '404': {description: Plan not found or owned by another user}
+        '410': {description: Source approval revoked}
+  /api/learning/tasks/{id}:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    patch:
+      operationId: updateLearningTask
+      description: Enforces prerequisites and transitions. Completed tasks are immutable.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status, timeSpentSeconds]
+              properties:
+                status: {$ref: '#/components/schemas/TaskStatus'}
+                timeSpentSeconds: {type: integer, minimum: 0, description: Cumulative seconds}
+      responses:
+        '2XX': {description: Task progress updated}
+        '409': {description: Invalid state transition or incomplete prerequisites}
+  /api/learning/plans/{id}/adapt:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    post:
+      operationId: adaptLearningPlan
+      description: Adds an audited focused-review task below 50 percent completion, idempotently.
+      responses:
+        '200':
+          description: Updated caller-owned plan
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Plan'}
+  /api/assessments/initial:
+    post:
+      operationId: createInitialDiagnostic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [topicIds]
+              properties:
+                topicIds: {$ref: '#/components/schemas/TopicIds'}
+      responses:
+        '2XX':
+          description: Frozen diagnostic from reviewed objective questions
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Assessment'}
+        '409': {description: No eligible reviewed questions; administrator must populate the bank}
+  /api/assessments/{id}:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      operationId: getDiagnostic
+      responses:
+        '200':
+          description: Caller-owned diagnostic; answer keys hidden until completion
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Assessment'}
+        '404': {description: Diagnostic not found or owned by another user}
+        '410': {description: Source approval revoked}
+  /api/assessments/{id}/answers:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    post:
+      operationId: answerDiagnosticQuestion
+      description: Repeated identical submissions do not repeat scoring or BKT updates.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [questionId, answer]
+              properties:
+                questionId: {type: string, format: uuid}
+                answer: {type: string}
+      responses:
+        '200':
+          description: Answer result
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [questionId, answer, isCorrect, completed, score]
+                properties:
+                  questionId: {type: string, format: uuid}
+                  answer: {type: string}
+                  isCorrect: {type: boolean}
+                  completed: {type: boolean}
+                  score: {type: [number, 'null']}
+        '410': {description: Source approval revoked}
+  /api/assessments/questions:
+    post:
+      operationId: authorReviewedQuestion
+      description: Requires ADMIN and an approved chunk belonging to the specified topic.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [topicId, content, options, correctAnswer, sourceChunkId]
+              properties:
+                topicId: {type: string, format: uuid}
+                content: {type: string}
+                options:
+                  type: array
+                  items: {$ref: '#/components/schemas/Choice'}
+                correctAnswer: {type: string}
+                explanation: {type: [string, 'null']}
+                difficulty: {type: [string, 'null']}
+                springModule: {type: [string, 'null']}
+                springVersion: {type: [string, 'null']}
+                sourceChunkId: {type: string, format: uuid}
+      responses:
+        '2XX':
+          description: Reviewed question identifier
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, topicId, reviewed]
+                properties:
+                  id: {type: string, format: uuid}
+                  topicId: {type: string, format: uuid}
+                  reviewed: {type: boolean, const: true}
+  /api/generation/examples:
+    post:
+      operationId: generateCodeExample
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query, level]
+              properties:
+                query: {type: string, minLength: 1, maxLength: 2000}
+                level: {$ref: '#/components/schemas/GenerationLevel'}
+                module: {type: [string, 'null']}
+                springVersion: {type: [string, 'null']}
+      responses:
+        '201': {$ref: '#/components/responses/Generated'}
+        '409': {description: Source approval changed during generation}
+        '422': {description: No approved evidence or invalid structured output}
+  /api/generation/comparisons:
+    post:
+      operationId: generateTechnicalComparison
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [left, right]
+              properties:
+                left: {type: string, minLength: 1, maxLength: 500}
+                right: {type: string, minLength: 1, maxLength: 500}
+                module: {type: [string, 'null']}
+                springVersion: {type: [string, 'null']}
+      responses:
+        '201': {$ref: '#/components/responses/Generated'}
+        '422': {description: No approved evidence or invalid structured output}
+  /api/generation/{id}:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      operationId: getGeneratedOutput
+      responses:
+        '200': {$ref: '#/components/responses/Generated'}
+        '404': {description: Output not found or owned by another user}
+        '410': {description: Source approval revoked}
+  /api/generation/projects:
+    post:
+      operationId: createProjectArchive
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ProjectRequest'}
+      responses:
+        '201': {$ref: '#/components/responses/ProjectArchive'}
+  /api/generation/{id}/project:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      operationId: downloadProjectArchive
+      responses:
+        '200': {$ref: '#/components/responses/ProjectArchive'}
+        '404': {description: Project not found or owned by another user}
+        '410': {description: Source approval revoked}
+  /api/internal/prompts/{name}/diff:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        schema: {type: string}
+      - name: from
+        in: query
+        required: true
+        schema: {type: integer, minimum: 1}
+      - name: to
+        in: query
+        required: true
+        schema: {type: integer, minimum: 1}
+    get:
+      operationId: diffPromptVersions
+      security:
+        - bearerAuth: []
+          promptAdminToken: []
+      responses:
+        '200':
+          description: Local registry versions, checksums and exact contiguous changed-line regions
+        '403': {description: Invalid prompt administration token}
+        '503': {description: Prompt administration is disabled}
+components:
+  securitySchemes:
+    bearerAuth: {type: http, scheme: bearer, bearerFormat: JWT}
+    promptAdminToken: {type: apiKey, in: header, name: X-Prompt-Admin-Token}
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+  responses:
+    Generated:
+      description: Owned AI-generated content; never automatically indexed or executed
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/GeneratedOutput'}
+    ProjectArchive:
+      description: Java 21 / Spring Boot 4.1.2 project ZIP
+      headers:
+        X-Generation-Id:
+          schema: {type: string, format: uuid}
+        Content-Disposition:
+          schema: {type: string}
+        Cache-Control:
+          description: Private response with no-store caching policy
+          schema: {type: string}
+      content:
+        application/zip:
+          schema: {type: string, format: binary}
+  schemas:
+    TopicIds:
+      type: array
+      minItems: 1
+      maxItems: 50
+      items: {type: string, format: uuid}
+    Source:
+      type: object
+      required: [id, title, url, license]
+      properties:
+        id: {type: string, format: uuid}
+        title: {type: string}
+        url: {type: string}
+        license: {type: string}
+        licenseUrl: {type: [string, 'null']}
+        author: {type: [string, 'null']}
+    Topic:
+      type: object
+      required: [id, name, prerequisites]
+      properties:
+        id: {type: string, format: uuid}
+        name: {type: string}
+        springModule: {type: [string, 'null']}
+        description: {type: [string, 'null']}
+        prerequisites:
+          type: array
+          items: {type: string, format: uuid}
+    PlanBase:
+      type: object
+      required: [id, title, status, modelId, promptVersion, sourceTopicIds, sources, createdAt, updatedAt]
+      properties:
+        id: {type: string, format: uuid}
+        title: {type: string}
+        goal: {type: [string, 'null']}
+        status: {type: string, enum: [ACTIVE, COMPLETED, PAUSED, ARCHIVED]}
+        modelId: {type: string}
+        promptVersion: {type: string}
+        sourceTopicIds:
+          type: array
+          items: {type: string, format: uuid}
+        sources:
+          type: array
+          items: {$ref: '#/components/schemas/Source'}
+        createdAt: {type: string, format: date-time}
+        updatedAt: {type: string, format: date-time}
+    PlanSummary:
+      allOf:
+        - {$ref: '#/components/schemas/PlanBase'}
+        - type: object
+          required: [taskCount, completedTaskCount]
+          properties:
+            taskCount: {type: integer}
+            completedTaskCount: {type: integer}
+    Plan:
+      allOf:
+        - {$ref: '#/components/schemas/PlanBase'}
+        - type: object
+          required: [tasks]
+          properties:
+            tasks:
+              type: array
+              items: {$ref: '#/components/schemas/LearningTask'}
+    TaskStatus:
+      type: string
+      enum: [PENDING, IN_PROGRESS, COMPLETED, SKIPPED]
+    LearningTask:
+      type: object
+      required: [id, title, order, status, prerequisiteTaskIds, timeSpentSeconds, createdAt, updatedAt]
+      properties:
+        id: {type: string, format: uuid}
+        topicId: {type: [string, 'null'], format: uuid}
+        title: {type: string}
+        description: {type: [string, 'null']}
+        order: {type: integer}
+        status: {$ref: '#/components/schemas/TaskStatus'}
+        prerequisiteTaskIds:
+          type: array
+          items: {type: string, format: uuid}
+        targetVersion: {type: [string, 'null']}
+        timeSpentSeconds: {type: integer, minimum: 0}
+        createdAt: {type: string, format: date-time}
+        updatedAt: {type: string, format: date-time}
+    Choice:
+      type: object
+      required: [label, text]
+      properties:
+        label: {type: string}
+        text: {type: string}
+    Assessment:
+      type: object
+      required: [id, sessionType, status, totalQuestions, questions, startedAt]
+      properties:
+        id: {type: string, format: uuid}
+        sessionType: {type: string, const: INITIAL_DIAGNOSTIC}
+        status: {type: string, enum: [IN_PROGRESS, COMPLETED, ABANDONED]}
+        totalQuestions: {type: integer}
+        correctCount: {type: [integer, 'null']}
+        score: {type: [number, 'null']}
+        startedAt: {type: string, format: date-time}
+        completedAt: {type: [string, 'null'], format: date-time}
+        submittedAt: {type: [string, 'null'], format: date-time}
+        questions:
+          type: array
+          items: {$ref: '#/components/schemas/AssessmentQuestion'}
+    AssessmentQuestion:
+      type: object
+      required: [id, topicId, content, options, source]
+      properties:
+        id: {type: string, format: uuid}
+        topicId: {type: string, format: uuid}
+        content: {type: string}
+        options:
+          type: array
+          items: {$ref: '#/components/schemas/Choice'}
+        userAnswer: {type: [string, 'null']}
+        isCorrect: {type: [boolean, 'null']}
+        correctAnswer: {type: [string, 'null'], description: Null until diagnostic completion}
+        explanation: {type: [string, 'null'], description: Null until diagnostic completion}
+        source: {$ref: '#/components/schemas/Source'}
+    GenerationLevel:
+      type: string
+      enum: [CONCEPT, PRACTICAL, SOURCE]
+    ProjectRequest:
+      type: object
+      required: [groupId, artifactId, name]
+      properties:
+        groupId: {type: string, description: Lowercase Java package with at least two non-keyword segments}
+        artifactId: {type: string, description: Safe lowercase hyphenated Maven identifier}
+        name: {type: string}
+        generationId: {type: [string, 'null'], format: uuid, description: Caller-owned EXAMPLE used only as documentation}
+    GeneratedOutput:
+      type: object
+      required: [id, kind, title, aiGenerated, origin, sources, modelId, promptVersion, createdAt]
+      properties:
+        id: {type: string, format: uuid}
+        kind: {type: string, enum: [EXAMPLE, COMPARISON, PROJECT]}
+        title: {type: string}
+        content: {type: [string, 'null']}
+        code: {type: [string, 'null']}
+        language: {type: [string, 'null']}
+        aiGenerated: {type: boolean, const: true}
+        origin: {type: string, const: AI_GENERATED}
+        sources:
+          type: array
+          items: {$ref: '#/components/schemas/Source'}
+        modelId: {type: string}
+        promptVersion: {type: string}
+        level: {type: [string, 'null'], enum: [CONCEPT, PRACTICAL, SOURCE, null]}
+        springVersion: {type: [string, 'null']}
+        createdAt: {type: string, format: date-time}
+        project:
+          anyOf:
+            - {$ref: '#/components/schemas/ProjectRequest'}
+            - {type: 'null'}

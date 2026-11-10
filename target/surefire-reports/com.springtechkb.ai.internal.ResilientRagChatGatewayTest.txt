@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: com.springtechkb.ai.internal.ResilientRagChatGatewayTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.292 s <<< FAILURE! -- in com.springtechkb.ai.internal.ResilientRagChatGatewayTest
+com.springtechkb.ai.internal.ResilientRagChatGatewayTest.totalStreamDeadlineDoesNotCountAsCircuitBreakerFailure -- Time elapsed: 0.237 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+expected: "CLOSED"
+ but was: "OPEN"
+	at com.springtechkb.ai.internal.ResilientRagChatGatewayTest.totalStreamDeadlineDoesNotCountAsCircuitBreakerFailure(ResilientRagChatGatewayTest.java:52)
+

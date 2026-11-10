@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: local-dev
+    env: dev
+
+# Spring Boot 在宿主机上以 :8080 运行，Prometheus 容器通过 host.docker.internal 访问。
+# docker-compose.yml 中已为 prometheus 服务添加 extra_hosts: host.docker.internal:host-gateway。
+scrape_configs:
+  - job_name: spring-tech-kb-service
+    metrics_path: /actuator/prometheus
+    scrape_interval: 15s
+    static_configs:
+      - targets:
+          - host.docker.internal:8080
+        labels:
+          instance: local

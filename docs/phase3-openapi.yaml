@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: Spring Tech KB Phase 3 Assessment API
+  version: 1.0.0
+  description: >
+    Phase 3 backend endpoints for assessment generation/review, coding judge,
+    subjective grading, IRT calibration, adaptive recommendation, and ability report.
+servers:
+  - url: http://localhost:8080
+security:
+  - bearerAuth: []
+paths:
+  /api/assessments/admin/question-batches:
+    post:
+      operationId: generateAssessmentQuestionBatch
+      description: Requires ADMIN. Generates draft questions from approved knowledge.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [topicIds, types, countPerTopic]
+              properties:
+                topicIds:
+                  type: array
+                  items: {type: string, format: uuid}
+                types:
+                  type: array
+                  items: {type: string, enum: [MULTIPLE_CHOICE, CODE_COMPLETION, OPEN_ENDED]}
+                countPerTopic: {type: integer, minimum: 1, maximum: 10}
+      responses:
+        '201': {description: Batch accepted with per-question validation outcomes}
+  /api/assessments/admin/questions/{questionId}/review:
+    post:
+      operationId: reviewGeneratedQuestion
+      description: Requires ADMIN. Approves or rejects a draft question with audit trail.
+      parameters:
+        - name: questionId
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [approve]
+              properties:
+                approve: {type: boolean}
+                note: {type: [string, 'null'], maxLength: 1000}
+                validationErrors:
+                  type: array
+                  items: {type: string}
+      responses:
+        '200': {description: Review result}
+  /api/assessments/coding/submissions:
+    post:
+      operationId: submitCodingAnswer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [questionId, idempotencyKey, sourceCode]
+              properties:
+                questionId: {type: string, format: uuid}
+                sessionId: {type: [string, 'null'], format: uuid}
+                idempotencyKey: {type: string, maxLength: 120}
+                sourceCode: {type: string, maxLength: 20000}
+      responses:
+        '200': {description: Compile/runtime/test result with score and hints}
+  /api/assessments/{assessmentId}/coding/run:
+    post:
+      operationId: runCodingPreviewForAssessment
+      parameters:
+        - name: assessmentId
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [questionId, code]
+              properties:
+                questionId: {type: string, format: uuid}
+                code: {type: string, maxLength: 20000}
+                language: {type: [string, 'null']}
+      responses:
+        '200': {description: Frontend-oriented run result (status/compile/runtime/tests/staticHints/output)}
+  /api/assessments/{assessmentId}/coding/submit:
+    post:
+      operationId: submitCodingForAssessment
+      parameters:
+        - name: assessmentId
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [questionId, code]
+              properties:
+                questionId: {type: string, format: uuid}
+                code: {type: string, maxLength: 20000}
+                language: {type: [string, 'null']}
+      responses:
+        '200': {description: Stores coding answer and returns frontend-oriented run result}
+  /api/assessments/open-ended/grades:
+    post:
+      operationId: gradeOpenEndedAnswer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [questionId, answer]
+              properties:
+                questionId: {type: string, format: uuid}
+                sessionId: {type: [string, 'null'], format: uuid}
+                answer: {type: string, maxLength: 12000}
+      responses:
+        '200': {description: Rubric dimension scores, feedback and normalized score}
+  /api/assessments/admin/irt/calibrate:
+    post:
+      operationId: triggerIrtCalibration
+      description: Requires ADMIN. Recomputes and stores 3PL approximation stats.
+      responses:
+        '200': {description: Number of recalibrated questions}
+  /api/assessments/adaptive/next:
+    get:
+      operationId: getAdaptiveQuestion
+      parameters:
+        - name: topicId
+          in: query
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        '200': {description: Next recommended approved question using user mastery + IRT}
+  /api/assessments/ability-report:
+    get:
+      operationId: getAbilityReport
+      responses:
+        '200': {description: Radar-ready ability dimensions, recent stats, recommendations}
+  /api/assessments/{assessmentId}/report:
+    get:
+      operationId: getAssessmentReport
+      parameters:
+        - name: assessmentId
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        '200': {description: Frontend report payload (overallScore, levels, strengths, improvements)}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

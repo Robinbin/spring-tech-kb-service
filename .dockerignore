@@ -1,0 +1,10 @@
+target/
+.idea/
+*.iml
+.git/
+.gitignore
+docs/
+infra/
+eval/
+.github/
+*.md
