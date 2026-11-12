@@ -13,7 +13,7 @@ import java.util.UUID;
 
 import com.springtechkb.HttpErrors;
 import com.springtechkb.knowledge.KnowledgeGraph;
-import com.springtechkb.knowledge.internal.ClosureValidator;
+import com.springtechkb.knowledge.ClosureValidator;
 import com.springtechkb.search.KnowledgeQueries;
 import com.springtechkb.search.KnowledgeQueries.Source;
 import com.springtechkb.user.UserSkillProfile;

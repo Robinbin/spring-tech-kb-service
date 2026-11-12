@@ -147,7 +147,7 @@ class EpicECoreTest {
         JdbcTemplate jdbc = mock(JdbcTemplate.class);
         EmbeddingModel embeddingModel = mock(EmbeddingModel.class);
         SemanticAnswerCache cache = new SemanticAnswerCache(jdbc, embeddingModel,
-                new com.fasterxml.jackson.databind.ObjectMapper(), 0.88, 6, 1024);
+                tools.jackson.databind.json.JsonMapper.builder().build(), 0.88, 6, 1024);
         ClassifiedQuery classified = new ClassifiedQuery(
                 SearchIntent.PERSONALIZED_TASK, QueryRoute.FAST_PATH, "spring-general");
 

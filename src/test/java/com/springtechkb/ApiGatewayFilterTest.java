@@ -9,6 +9,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.Clock;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -83,5 +85,32 @@ class ApiGatewayFilterTest {
         assertThat(response.getStatus()).isEqualTo(404);
         assertThat(response.getContentAsString()).contains("not_found");
         assertThat(meters.get("gateway.requests.active").gauge().value()).isZero();
+    }
+
+    @Test
+    void forwardedHeadersCannotGiveOneSocketPeerMultipleRateLimitIdentities() throws ServletException, IOException {
+        ConcurrentHashMap<String, AtomicLong> requests = new ConcurrentHashMap<>();
+        SimpleMeterRegistry meters = new SimpleMeterRegistry();
+        ApiRateLimiter limiter = new ApiRateLimiter(
+                (key, ttl) -> requests.computeIfAbsent(key, ignored -> new AtomicLong()).incrementAndGet(),
+                meters, 1, "test:gateway", Clock.systemUTC());
+        ApiGatewayFilter filter = new ApiGatewayFilter(limiter, ApiGatewayFilter.RuntimeRole.AI_ENGINE, meters);
+
+        MockHttpServletRequest first = new MockHttpServletRequest("GET", "/api/search");
+        first.setRemoteAddr("192.0.2.10");
+        first.addHeader("X-Forwarded-For", "198.51.100.1");
+        first.addHeader("X-Real-IP", "198.51.100.1");
+        MockHttpServletResponse firstResponse = new MockHttpServletResponse();
+        filter.doFilter(first, firstResponse, (req, res) -> ((MockHttpServletResponse) res).setStatus(204));
+
+        MockHttpServletRequest second = new MockHttpServletRequest("GET", "/api/search");
+        second.setRemoteAddr("192.0.2.10");
+        second.addHeader("X-Forwarded-For", "198.51.100.2");
+        second.addHeader("X-Real-IP", "198.51.100.2");
+        MockHttpServletResponse secondResponse = new MockHttpServletResponse();
+        filter.doFilter(second, secondResponse, (req, res) -> ((MockHttpServletResponse) res).setStatus(204));
+
+        assertThat(firstResponse.getStatus()).isEqualTo(204);
+        assertThat(secondResponse.getStatus()).isEqualTo(429);
     }
 }

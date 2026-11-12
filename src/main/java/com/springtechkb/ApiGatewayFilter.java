@@ -50,7 +50,7 @@ class ApiGatewayFilter extends OncePerRequestFilter {
             response.getWriter().write("{\"error\":\"not_found\"}");
             return;
         }
-        String clientAddress = resolveClientIdentity(request);
+        String clientAddress = request.getRemoteAddr();
         if (!rateLimiter.allow(clientAddress)) {
             response.setStatus(429);
             response.setHeader("Retry-After", Long.toString(
@@ -73,19 +73,6 @@ class ApiGatewayFilter extends OncePerRequestFilter {
                 activeRequests.decrementAndGet();
             }
         }
-    }
-
-    /** Resolves the rate-limit identity, preferring proxy-forwarded headers over the socket address. */
-    private static String resolveClientIdentity(HttpServletRequest request) {
-        String forwarded = request.getHeader("X-Forwarded-For");
-        if (forwarded != null && !forwarded.isBlank()) {
-            return forwarded.split(",")[0].trim();
-        }
-        String realIp = request.getHeader("X-Real-IP");
-        if (realIp != null && !realIp.isBlank()) {
-            return realIp.trim();
-        }
-        return request.getRemoteAddr();
     }
 
     private static final class ActiveRequestListener implements AsyncListener {

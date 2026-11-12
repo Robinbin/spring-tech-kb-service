@@ -1,4 +1,4 @@
-package com.springtechkb.knowledge.internal;
+package com.springtechkb.knowledge;
 
 import java.util.HashMap;
 import java.util.List;

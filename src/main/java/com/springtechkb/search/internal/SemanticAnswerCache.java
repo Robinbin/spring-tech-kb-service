@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springtechkb.search.ClassifiedQuery;
 import com.springtechkb.search.RagCitation;
 import org.springframework.ai.embedding.EmbeddingModel;
@@ -15,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
 
 /** Pgvector-backed semantic answer cache with strict version/intent/domain isolation. */
 @Service
@@ -24,7 +24,7 @@ public class SemanticAnswerCache {
 
     private final JdbcTemplate jdbc;
     private final EmbeddingModel embeddingModel;
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
     private final double minimumSimilarity;
     private final int ttlHours;
     private final int expectedDimensions;
@@ -32,7 +32,7 @@ public class SemanticAnswerCache {
     SemanticAnswerCache(
             JdbcTemplate jdbc,
             EmbeddingModel embeddingModel,
-            ObjectMapper objectMapper,
+            JsonMapper objectMapper,
             @Value("${springtechkb.rag.semantic-cache.minimum-similarity:0.88}") double minimumSimilarity,
             @Value("${springtechkb.rag.semantic-cache.ttl-hours:6}") int ttlHours,
             @Value("${springtechkb.rag.embedding-dimensions:1024}") int expectedDimensions) {
@@ -85,7 +85,7 @@ public class SemanticAnswerCache {
                         return Optional.of(new CachedRagAnswer(
                                 rs.getString("answer"),
                                 objectMapper.readValue(rs.getString("citations"), CITATIONS_TYPE)));
-                    } catch (JsonProcessingException exception) {
+                    } catch (JacksonException exception) {
                         throw new IllegalStateException("Could not decode semantic-cache citations", exception);
                     }
                 },
@@ -152,7 +152,7 @@ public class SemanticAnswerCache {
     private String json(Object value) {
         try {
             return objectMapper.writeValueAsString(value);
-        } catch (JsonProcessingException exception) {
+        } catch (JacksonException exception) {
             throw new IllegalStateException("Could not serialize semantic-cache value", exception);
         }
     }

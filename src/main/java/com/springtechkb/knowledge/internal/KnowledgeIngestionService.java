@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springtechkb.knowledge.CrawledDocument;
 import com.springtechkb.knowledge.KnowledgeChunk;
 import com.springtechkb.knowledge.KnowledgeIndexedEvent;
@@ -22,6 +20,8 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
 
 /** Atomically persists approved source text, chunks, FTS documents, vectors and an outbox record. */
 @Service
@@ -33,7 +33,7 @@ public class KnowledgeIngestionService {
     private final SourceAdmissionPolicy admissionPolicy;
     private final InstructionInjectionDetector injectionDetector;
     private final ApplicationEventPublisher events;
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
 
     KnowledgeIngestionService(
             JdbcTemplate jdbc,
@@ -42,7 +42,7 @@ public class KnowledgeIngestionService {
             SourceAdmissionPolicy admissionPolicy,
             InstructionInjectionDetector injectionDetector,
             ApplicationEventPublisher events,
-            ObjectMapper objectMapper) {
+            JsonMapper objectMapper) {
         this.jdbc = jdbc;
         this.vectorStore = vectorStore;
         this.chunker = chunker;
@@ -202,7 +202,7 @@ public class KnowledgeIngestionService {
         payload.put("chunkCount", chunkCount);
         try {
             return objectMapper.writeValueAsString(payload);
-        } catch (JsonProcessingException exception) {
+        } catch (JacksonException exception) {
             throw new IllegalStateException("Could not serialize knowledge indexing outbox event", exception);
         }
     }

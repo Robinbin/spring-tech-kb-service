@@ -16,7 +16,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import com.springtechkb.HttpErrors;
-import com.springtechkb.knowledge.internal.ClosureValidator;
+import com.springtechkb.knowledge.ClosureValidator;
 import com.springtechkb.ai.StructuredGenerationGateway;
 import com.springtechkb.knowledge.KnowledgeGraph;
 import com.springtechkb.knowledge.KnowledgeGraph.Topic;
