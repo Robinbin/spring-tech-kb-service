@@ -1,83 +1,69 @@
 package com.springtechkb.search.internal;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import org.bsc.langgraph4j.CompiledGraph;
+import org.bsc.langgraph4j.GraphStateException;
+import org.bsc.langgraph4j.RunnableConfig;
+import org.bsc.langgraph4j.StateGraph;
+import org.bsc.langgraph4j.serializer.std.ObjectStreamStateSerializer;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 import com.springtechkb.search.SearchHit;
 
-/** Performs bounded multi-hop retrieval, with one targeted hop per detected Spring version. */
+/** Delegates bounded multi-hop retrieval to the LangGraph4j agentic retrieval graph. */
 @Service
 public class AgenticRetrievalService {
 
-    private static final int HARD_ITERATION_LIMIT = 5;
-    private static final Pattern VERSION = Pattern.compile("\\b\\d+\\.\\d+(?:\\.\\d+)?(?:\\.x)?\\b");
-    private static final Pattern COMPARISON_SPLIT = Pattern.compile(
-            "(?i)\\b(?:versus|vs|and|between|compare|difference)\\b|以及|和|与|对比|区别");
+    private final CompiledGraph<KbAgentState> graph;
 
-    private final KnowledgeRetrievalTool retrievalTool;
-    private final int maxIterations;
-
-    AgenticRetrievalService(
-            KnowledgeRetrievalTool retrievalTool,
-            @Value("${springtechkb.rag.agentic.max-iterations:3}") int configuredMaxIterations) {
-        this.retrievalTool = retrievalTool;
-        this.maxIterations = Math.max(1, Math.min(HARD_ITERATION_LIMIT, configuredMaxIterations));
+    AgenticRetrievalService(CompiledGraph<KbAgentState> agenticRetrievalGraph) {
+        this.graph = agenticRetrievalGraph;
     }
 
     public RetrievalResult retrieve(String question, String module, String requestedVersion) {
-        List<String> hops = buildHops(question, requestedVersion);
-        Map<String, SearchHit> uniqueHits = new LinkedHashMap<>();
-        int iterations = 0;
-        for (String hop : hops) {
-            if (iterations >= maxIterations) break;
-            List<SearchHit> hits = retrievalTool.search(
-                    hop, module, requestedVersion == null || requestedVersion.isBlank()
-                            ? versionFrom(hop) : requestedVersion);
-            iterations++;
-            for (SearchHit hit : hits) uniqueHits.putIfAbsent(hit.id(), hit);
-            if (hits.isEmpty() && iterations > 1) break;
-        }
-        return new RetrievalResult(List.copyOf(uniqueHits.values()), iterations);
+        return retrieve(question, module, requestedVersion, null);
     }
 
-    private List<String> buildHops(String question, String requestedVersion) {
-        if (requestedVersion != null && !requestedVersion.isBlank()) {
-            return List.of(question, question + " compatibility and behavior");
-        }
-        List<String> versions = extractVersions(question);
-        if (versions.size() >= 2) {
-            return versions.stream().map(version -> question + " Spring version " + version).toList();
-        }
+    /**
+     * @param sessionId when non-null the graph will persist and restore checkpoint state
+     *                  via the JDBC saver, enabling cross-request memory for the session.
+     */
+    public RetrievalResult retrieve(String question, String module, String requestedVersion, String sessionId) {
+        Map<String, Object> input = Map.of(
+                KbAgentState.QUESTION, question,
+                KbAgentState.MODULE,   module != null ? module : "",
+                KbAgentState.VERSION,  requestedVersion != null ? requestedVersion : "");
 
-        String[] parts = COMPARISON_SPLIT.split(question, 3);
-        if (parts.length >= 2 && !parts[1].isBlank()) {
-            return List.of(question, parts[1].trim());
-        }
-        return List.of(question, question + " compatibility and behavior");
+        RunnableConfig config = sessionId != null
+                ? RunnableConfig.builder().threadId(sessionId).build()
+                : RunnableConfig.builder().build();
+
+        return graph.invoke(input, config)
+                .map(state -> new RetrievalResult(
+                        state.hits().orElse(List.of()),
+                        state.iterations().orElse(0)))
+                .orElse(new RetrievalResult(List.of(), 0));
     }
 
-    private List<String> extractVersions(String question) {
-        Matcher matcher = VERSION.matcher(question);
-        List<String> versions = new ArrayList<>();
-        while (matcher.find()) {
-            String version = matcher.group();
-            if (!versions.contains(version)) versions.add(version);
+    /**
+     * Package-private factory for unit tests: builds a Phase-1 style graph
+     * (hop_planner → search_executor, no LLM router) so tests avoid external calls.
+     */
+    static AgenticRetrievalService forTesting(KnowledgeRetrievalTool tool, int maxIterations) {
+        try {
+            var graph = new StateGraph<>(new ObjectStreamStateSerializer<>(KbAgentState::new))
+                    .addNode("hop_planner",     new HopPlannerNode())
+                    .addNode("search_executor", new SearchExecutorNode(tool, maxIterations))
+                    .addEdge(StateGraph.START,   "hop_planner")
+                    .addEdge("hop_planner",      "search_executor")
+                    .addEdge("search_executor",  StateGraph.END)
+                    .compile();
+            return new AgenticRetrievalService(graph);
+        } catch (GraphStateException e) {
+            throw new IllegalStateException("Failed to build test graph", e);
         }
-        return versions;
-    }
-
-    private String versionFrom(String query) {
-        Matcher matcher = VERSION.matcher(query);
-        String result = null;
-        while (matcher.find()) result = matcher.group();
-        return result;
     }
 
     public record RetrievalResult(List<SearchHit> hits, int iterations) {}

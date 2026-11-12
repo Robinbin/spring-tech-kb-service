@@ -11,6 +11,7 @@
  *   <li>{@link com.springtechkb.ai.StructuredGenerationGateway} — 原生 JSON Schema 输出、校验与有界重试</li>
  *   <li>{@link com.springtechkb.ai.PromptCatalog} — 版本化 Prompt 的模块间契约</li>
  *   <li>{@link com.springtechkb.ai.GenerationTelemetry} — 元数据追踪与 Prompt 版本关联，不导出内容</li>
+ *   <li>{@link com.springtechkb.ai.QueryClassificationGateway} — 轻量意图分类，lite 模型单次同步调用</li>
  * </ul>
  *
  * <h2>硬约束</h2>

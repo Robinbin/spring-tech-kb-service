@@ -8,12 +8,12 @@ public interface KnowledgeGraph {
     List<Topic> prerequisites(UUID topicId);
     List<Topic> orderedClosure(List<UUID> topicIds);
 
-    UUID createTopic(String name, String module, String description);
-    void addPrerequisite(UUID topicId, UUID prerequisiteId);
-    void removePrerequisite(UUID topicId, UUID prerequisiteId);
+    default UUID createTopic(String name, String module, String description) { throw new UnsupportedOperationException(); }
+    default void addPrerequisite(UUID topicId, UUID prerequisiteId) { throw new UnsupportedOperationException(); }
+    default void removePrerequisite(UUID topicId, UUID prerequisiteId) { throw new UnsupportedOperationException(); }
 
     /** Returns approved knowledge source IDs that have chunks tagged with the given topic. */
-    List<UUID> approvedSourceIds(UUID topicId);
+    default List<UUID> approvedSourceIds(UUID topicId) { return List.of(); }
 
     record Topic(UUID id, String name, String springModule, String description, List<UUID> prerequisites) {}
 }

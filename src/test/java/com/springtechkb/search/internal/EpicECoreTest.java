@@ -64,7 +64,7 @@ class EpicECoreTest {
     void versionComparisonUsesTwoIndependentRetrievalHopsWithinHardLimit() {
         KnowledgeRetrievalTool tool = mock(KnowledgeRetrievalTool.class);
         when(tool.search(anyString(), eq("mvc"), anyString())).thenReturn(List.of());
-        AgenticRetrievalService service = new AgenticRetrievalService(tool, 3);
+        AgenticRetrievalService service = AgenticRetrievalService.forTesting(tool, 3);
 
         AgenticRetrievalService.RetrievalResult result =
                 service.retrieve("Compare Spring 5.3 and 6.1 MVC", "mvc", null);
@@ -79,7 +79,7 @@ class EpicECoreTest {
     void agenticIterationConfigurationCannotExceedHardLimit() {
         KnowledgeRetrievalTool tool = mock(KnowledgeRetrievalTool.class);
         when(tool.search(anyString(), any(), any())).thenReturn(List.of());
-        AgenticRetrievalService service = new AgenticRetrievalService(tool, 99);
+        AgenticRetrievalService service = AgenticRetrievalService.forTesting(tool, 99);
 
         AgenticRetrievalService.RetrievalResult result =
                 service.retrieve("Compare two compatibility approaches", null, null);

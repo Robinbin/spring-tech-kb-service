@@ -22,6 +22,7 @@
     <spring-ai.version>2.0.2</spring-ai.version>
     <spring-modulith.version>2.1.2</spring-modulith.version>
     <resilience4j.version>2.3.0</resilience4j.version>
+    <langgraph4j.version>1.5.12</langgraph4j.version>
   </properties>
 
   <dependencyManagement>
@@ -104,6 +105,18 @@
       <groupId>com.github.siom79.japicmp</groupId>
       <artifactId>japicmp</artifactId>
       <version>0.26.5</version>
+    </dependency>
+
+    <!-- Agent 编排 -->
+    <dependency>
+      <groupId>org.bsc.langgraph4j</groupId>
+      <artifactId>langgraph4j-core</artifactId>
+      <version>${langgraph4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bsc.langgraph4j</groupId>
+      <artifactId>langgraph4j-spring-ai</artifactId>
+      <version>${langgraph4j.version}</version>
     </dependency>
 
     <!-- MCP Server（OPT-04 可行性）-->

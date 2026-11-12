@@ -8,16 +8,19 @@ import com.springtechkb.search.KnowledgeQueries;
 import com.springtechkb.search.SearchResponse;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class KnowledgeMcpTools {
     private final KnowledgeQueries queries;
     private final KnowledgeGraph graph;
+    private final JdbcTemplate jdbc;
 
-    KnowledgeMcpTools(KnowledgeQueries queries, KnowledgeGraph graph) {
+    KnowledgeMcpTools(KnowledgeQueries queries, KnowledgeGraph graph, JdbcTemplate jdbc) {
         this.queries = queries;
         this.graph = graph;
+        this.jdbc = jdbc;
     }
 
     @Tool(name = "search_knowledge", description = "Search approved Spring knowledge, returning version, source URL and license attribution.")
@@ -44,7 +47,11 @@ public class KnowledgeMcpTools {
     @Tool(name = "check_prerequisites", description = "Get the recursively resolved topological prerequisites for a topic with approved source/license attribution; fails explicitly when prerequisite topics lack approved evidence.")
     public List<Prerequisite> prerequisites(@ToolParam(description = "Knowledge topic UUID") String topicId) {
         return graph.prerequisites(UUID.fromString(topicId)).stream().map(topic -> {
-            List<UUID> sources = graph.approvedSourceIds(topic.id());
+            List<UUID> sources = jdbc.queryForList(
+                    "SELECT ks.id FROM knowledge_source ks " +
+                    "JOIN knowledge_topic_source kts ON kts.source_id = ks.id " +
+                    "WHERE kts.topic_id = ? AND ks.is_approved = TRUE",
+                    UUID.class, topic.id());
             if (sources.isEmpty()) throw new org.springframework.web.server.ResponseStatusException(
                     org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY,
                     "Prerequisite topic lacks approved source attribution: " + topic.id());
