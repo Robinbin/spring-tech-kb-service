@@ -20,27 +20,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SemanticAnswerCache {
 
-    private static final ObjectMapper JSON = new ObjectMapper();
-    private static final int EXPECTED_DIMENSIONS = 1024;
     private static final TypeReference<List<RagCitation>> CITATIONS_TYPE = new TypeReference<>() {};
 
     private final JdbcTemplate jdbc;
     private final EmbeddingModel embeddingModel;
+    private final ObjectMapper objectMapper;
     private final double minimumSimilarity;
     private final int ttlHours;
+    private final int expectedDimensions;
 
     SemanticAnswerCache(
             JdbcTemplate jdbc,
             EmbeddingModel embeddingModel,
+            ObjectMapper objectMapper,
             @Value("${springtechkb.rag.semantic-cache.minimum-similarity:0.88}") double minimumSimilarity,
-            @Value("${springtechkb.rag.semantic-cache.ttl-hours:6}") int ttlHours) {
-        if (minimumSimilarity < 0 || minimumSimilarity > 1 || ttlHours <= 0) {
-            throw new IllegalArgumentException("Invalid semantic cache similarity threshold or TTL");
+            @Value("${springtechkb.rag.semantic-cache.ttl-hours:6}") int ttlHours,
+            @Value("${springtechkb.rag.embedding-dimensions:1024}") int expectedDimensions) {
+        if (minimumSimilarity < 0 || minimumSimilarity > 1 || ttlHours <= 0 || expectedDimensions < 1) {
+            throw new IllegalArgumentException("Invalid semantic cache similarity threshold, TTL, or embedding dimensions");
         }
         this.jdbc = jdbc;
         this.embeddingModel = embeddingModel;
+        this.objectMapper = objectMapper;
         this.minimumSimilarity = minimumSimilarity;
         this.ttlHours = ttlHours;
+        this.expectedDimensions = expectedDimensions;
     }
 
     @Transactional(readOnly = true)
@@ -80,7 +84,7 @@ public class SemanticAnswerCache {
                     try {
                         return Optional.of(new CachedRagAnswer(
                                 rs.getString("answer"),
-                                JSON.readValue(rs.getString("citations"), CITATIONS_TYPE)));
+                                objectMapper.readValue(rs.getString("citations"), CITATIONS_TYPE)));
                     } catch (JsonProcessingException exception) {
                         throw new IllegalStateException("Could not decode semantic-cache citations", exception);
                     }
@@ -137,15 +141,17 @@ public class SemanticAnswerCache {
 
     private float[] embed(String question) {
         float[] vector = embeddingModel.embed(question);
-        if (vector == null || vector.length != EXPECTED_DIMENSIONS) {
-            throw new IllegalStateException("Semantic cache requires a 1024-dimensional embedding");
+        if (vector == null || vector.length != expectedDimensions) {
+            throw new IllegalStateException(
+                    "Semantic cache requires a " + expectedDimensions + "-dimensional embedding, got "
+                    + (vector == null ? "null" : vector.length));
         }
         return Arrays.copyOf(vector, vector.length);
     }
 
     private String json(Object value) {
         try {
-            return JSON.writeValueAsString(value);
+            return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException exception) {
             throw new IllegalStateException("Could not serialize semantic-cache value", exception);
         }

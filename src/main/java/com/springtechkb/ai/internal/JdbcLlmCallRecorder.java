@@ -48,7 +48,7 @@ class JdbcLlmCallRecorder implements LlmCallRecorder {
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     userId,
-                    operation.startsWith("learning") ? "learning" : operation.equals("rag.answer") ? "search" : "generation",
+                    moduleForOperation(operation),
                     operation,
                     modelId == null || modelId.isBlank() ? "unknown" : modelId,
                     tier == null ? null : tier.name(),
@@ -103,6 +103,14 @@ class JdbcLlmCallRecorder implements LlmCallRecorder {
         return environment.getProperty(prefix + category + "-per-million", BigDecimal.class,
                 environment.getProperty("LLM_PRICE_" + tier.name() + "_"
                         + category.toUpperCase(java.util.Locale.ROOT).replace('-', '_') + "_PER_MILLION", BigDecimal.class));
+    }
+
+    /** Maps an operation string to the Spring module column value stored in llm_call_log. */
+    private static String moduleForOperation(String operation) {
+        if (operation == null) return "unknown";
+        if (operation.startsWith("learning")) return "learning";
+        if ("rag.answer".equals(operation)) return "search";
+        return "generation";
     }
 
     private static UUID parseUserId(String callerKey) {

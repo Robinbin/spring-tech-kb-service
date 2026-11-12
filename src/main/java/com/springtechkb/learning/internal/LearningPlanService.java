@@ -15,6 +15,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import com.springtechkb.HttpErrors;
+import com.springtechkb.knowledge.internal.ClosureValidator;
 import com.springtechkb.ai.StructuredGenerationGateway;
 import com.springtechkb.knowledge.KnowledgeGraph;
 import com.springtechkb.knowledge.KnowledgeGraph.Topic;
@@ -68,22 +70,22 @@ public class LearningPlanService {
         if (requestedIds == null || requestedIds.isEmpty() || requestedIds.size() > MAX_REQUESTED_TOPICS
                 || requestedIds.stream().anyMatch(Objects::isNull)
                 || new HashSet<>(requestedIds).size() != requestedIds.size()) {
-            throw badRequest("Choose between 1 and 8 distinct learning topics");
+            throw HttpErrors.badRequest("Choose between 1 and 8 distinct learning topics");
         }
         String goal = normalizeGoal(request.goal());
         List<Topic> closure = graph.orderedClosure(requestedIds);
         if (closure == null || closure.isEmpty() || closure.size() > MAX_CLOSURE_TOPICS) {
-            throw badRequest("The selected topics have no valid prerequisite closure or exceed the topic limit");
+            throw HttpErrors.badRequest("The selected topics have no valid prerequisite closure or exceed the topic limit");
         }
         Set<UUID> closureTopicIds = new HashSet<>();
         for (Topic topic : closure) {
             if (topic == null || topic.id() == null || !closureTopicIds.add(topic.id())) {
-                throw badRequest("The knowledge graph returned an invalid prerequisite closure");
+                throw HttpErrors.badRequest("The knowledge graph returned an invalid prerequisite closure");
             }
         }
         validateClosureOrder(closure);
         if (!closureTopicIds.containsAll(requestedIds)) {
-            throw badRequest("Every requested topic must be present in its prerequisite closure");
+            throw HttpErrors.badRequest("Every requested topic must be present in its prerequisite closure");
         }
         List<UUID> evidenceSourceIds = approvedEvidenceSourceIds(closureTopicIds);
 
@@ -95,7 +97,7 @@ public class LearningPlanService {
                 .toList();
         String input = writeJson(new GenerationInput(goal, requestedIds, closure, skillInputs, MAX_TASKS));
         if (input.length() > 100_000) {
-            throw badRequest("The selected topics and skill profile exceed the plan-generation input limit");
+            throw HttpErrors.badRequest("The selected topics and skill profile exceed the plan-generation input limit");
         }
         StructuredGenerationGateway.Generated<PlanDraft> generated =
                 generation.generate("learning-plan", userId.toString(), input, PlanDraft.class);
@@ -114,14 +116,14 @@ public class LearningPlanService {
             try {
                 currentClosure = graph.orderedClosure(requestedIds);
             } catch (ResponseStatusException changedGraph) {
-                throw conflict("The knowledge graph changed during plan generation; retry with the current topics");
+                throw HttpErrors.conflict("The knowledge graph changed during plan generation; retry with the current topics");
             }
             if (!sameGraphSnapshot(closure, currentClosure)) {
-                throw conflict("The knowledge graph changed during plan generation; retry with the current topics");
+                throw HttpErrors.conflict("The knowledge graph changed during plan generation; retry with the current topics");
             }
             List<UUID> currentEvidence = approvedEvidenceSourceIds(closureTopicIds);
             if (!evidenceSourceIds.equals(currentEvidence)) {
-                throw conflict("Approved topic evidence changed during plan generation; retry");
+                throw HttpErrors.conflict("Approved topic evidence changed during plan generation; retry");
             }
             return persist(userId, goal, draft, prepared, closureSourceIds, evidenceSourceIds,
                     generated.modelId(), generated.promptVersion());
@@ -181,7 +183,7 @@ public class LearningPlanService {
                 parseUuidArray(rs.getString("source_topic_ids")), parseUuidArray(rs.getString("source_ids")),
                 rs.getTimestamp("created_at").toInstant(),
                 rs.getTimestamp("updated_at").toInstant()), planId, userId);
-        if (rows.isEmpty()) throw notFound("Learning plan was not found");
+        if (rows.isEmpty()) throw HttpErrors.notFound("Learning plan was not found");
         PlanRow plan = rows.getFirst();
         List<TaskView> tasks = jdbc.query("""
                 SELECT t.id, t.topic_id, t.title, t.description, t.task_order, t.status,
@@ -206,7 +208,7 @@ public class LearningPlanService {
     TaskView updateTask(UUID userId, UUID taskId, UpdateTaskRequest request) {
         if (request.status() == null || request.timeSpentSeconds() == null
                 || request.timeSpentSeconds() < 0 || request.timeSpentSeconds() > 31_536_000) {
-            throw badRequest("Provide a valid task status and timeSpentSeconds between 0 and 31536000");
+            throw HttpErrors.badRequest("Provide a valid task status and timeSpentSeconds between 0 and 31536000");
         }
         List<LockedTask> locked = jdbc.query("""
                     SELECT t.id, t.plan_id, t.topic_id, t.status, t.prerequisite_task_ids,
@@ -217,19 +219,19 @@ public class LearningPlanService {
                     rs.getObject("id", UUID.class), rs.getObject("plan_id", UUID.class),
                     rs.getObject("topic_id", UUID.class), rs.getString("status"),
                     parseUuidArray(rs.getString("prerequisite_task_ids")), rs.getInt("task_order")), taskId, userId);
-            if (locked.isEmpty()) throw notFound("Learning task was not found");
+            if (locked.isEmpty()) throw HttpErrors.notFound("Learning task was not found");
             LockedTask task = locked.getFirst();
             if ("COMPLETED".equals(task.status())) {
-                throw conflict("Completed tasks are immutable");
+                throw HttpErrors.conflict("Completed tasks are immutable");
             }
             String next = request.status();
             if (!Set.of("PENDING", "IN_PROGRESS", "COMPLETED", "SKIPPED").contains(next)
                     || !validTransition(task.status(), next)) {
-                throw conflict("The requested task status transition is not allowed");
+                throw HttpErrors.conflict("The requested task status transition is not allowed");
             }
             if (("IN_PROGRESS".equals(next) || "COMPLETED".equals(next))
                     && !prerequisitesCompleted(task.prerequisites(), userId)) {
-                throw conflict("Complete all prerequisite tasks before starting this task");
+                throw HttpErrors.conflict("Complete all prerequisite tasks before starting this task");
             }
             jdbc.update("""
                     UPDATE learning_task SET status = ?, updated_at = now() WHERE id = ?
@@ -252,7 +254,7 @@ public class LearningPlanService {
         List<String> planStatuses = jdbc.query("""
                     SELECT status FROM learning_plan WHERE id = ? AND user_id = ? FOR UPDATE
                     """, (rs, rowNum) -> rs.getString("status"), planId, userId);
-            if (planStatuses.isEmpty()) throw notFound("Learning plan was not found");
+            if (planStatuses.isEmpty()) throw HttpErrors.notFound("Learning plan was not found");
             List<String> planSources = jdbc.query("""
                     SELECT source_ids::text FROM learning_plan WHERE id = ? AND user_id = ?
                     """, (rs, rowNum) -> rs.getString(1), planId, userId);
@@ -261,16 +263,16 @@ public class LearningPlanService {
                     SELECT count(*) FROM learning_plan_adaptation WHERE plan_id = ? AND user_id = ?
                     """, Integer.class, planId, userId);
             if (previousAdaptations >= MAX_ADAPTATIONS) {
-                throw conflict("This plan has reached its adaptation limit");
+                throw HttpErrors.conflict("This plan has reached its adaptation limit");
             }
             long total = jdbc.queryForObject("SELECT count(*) FROM learning_task WHERE plan_id = ?", Long.class, planId);
             long completed = jdbc.queryForObject("""
                     SELECT count(*) FROM learning_task WHERE plan_id = ? AND status = 'COMPLETED'
                     """, Long.class, planId);
-            if (total == 0 || total >= MAX_TASKS) throw conflict("This plan cannot accept another adaptation task");
+            if (total == 0 || total >= MAX_TASKS) throw HttpErrors.conflict("This plan cannot accept another adaptation task");
             double rate = completed / (double) total;
             if (rate >= ADAPTATION_THRESHOLD) {
-                throw conflict("Adaptation is only available while completion rate is below 50 percent");
+                throw HttpErrors.conflict("Adaptation is only available while completion rate is below 50 percent");
             }
             List<AdaptSource> candidates = jdbc.query("""
                     SELECT id, topic_id, title, description, prerequisite_task_ids, target_version, task_order
@@ -281,7 +283,7 @@ public class LearningPlanService {
                     rs.getString("title"), rs.getString("description"),
                     parseUuidArray(rs.getString("prerequisite_task_ids")), rs.getString("target_version"),
                     rs.getInt("task_order")), planId);
-            if (candidates.isEmpty()) throw conflict("No incomplete task is available to adapt");
+            if (candidates.isEmpty()) throw HttpErrors.conflict("No incomplete task is available to adapt");
             AdaptSource source = candidates.getFirst();
             int order = jdbc.queryForObject("""
                     SELECT COALESCE(MAX(task_order), -1) + 1 FROM learning_task WHERE plan_id = ?
@@ -407,20 +409,7 @@ public class LearningPlanService {
     }
 
     private static void validateClosureOrder(List<Topic> closure) {
-        Map<UUID, Integer> positions = new java.util.HashMap<>();
-        for (int index = 0; index < closure.size(); index++) {
-            positions.put(closure.get(index).id(), index);
-        }
-        for (int index = 0; index < closure.size(); index++) {
-            List<UUID> prerequisites = closure.get(index).prerequisites();
-            if (prerequisites == null) continue;
-            for (UUID prerequisite : prerequisites) {
-                Integer prerequisitePosition = positions.get(prerequisite);
-                if (prerequisitePosition == null || prerequisitePosition >= index) {
-                    throw badRequest("The knowledge graph returned a non-topological prerequisite closure");
-                }
-            }
-        }
+        ClosureValidator.assertTopologicalOrder(closure);
     }
 
     private static boolean validTransition(String current, String next) {
@@ -453,7 +442,7 @@ public class LearningPlanService {
     private String normalizeGoal(String goal) {
         if (goal == null || goal.isBlank()) return null;
         String normalized = goal.trim();
-        if (normalized.length() > 2000) throw badRequest("Goal must be 2000 characters or fewer");
+        if (normalized.length() > 2000) throw HttpErrors.badRequest("Goal must be 2000 characters or fewer");
         return normalized;
     }
 
@@ -513,18 +502,6 @@ public class LearningPlanService {
     private static ResponseStatusException invalidDraft() {
         return new ResponseStatusException(HttpStatus.BAD_GATEWAY,
                 "The generated learning plan contained invalid topics, tasks, or task dependencies");
-    }
-
-    private static ResponseStatusException badRequest(String message) {
-        return new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
-    }
-
-    private static ResponseStatusException notFound(String message) {
-        return new ResponseStatusException(HttpStatus.NOT_FOUND, message);
-    }
-
-    private static ResponseStatusException conflict(String message) {
-        return new ResponseStatusException(HttpStatus.CONFLICT, message);
     }
 
     record CreatePlanRequest(

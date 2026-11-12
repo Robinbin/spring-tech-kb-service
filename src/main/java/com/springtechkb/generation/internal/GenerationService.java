@@ -136,25 +136,32 @@ class GenerationService {
 
     private Output generate(UUID owner, Kind kind, String prompt, String input, List<Source> sources,
                             String level, String springVersion) {
+        StructuredGenerationGateway.Generated<Draft> generated = null;
+        Draft draft = null;
         for (int attempt = 0; attempt < 2; attempt++) {
-            var generated = gateway.generate(prompt, owner.toString(), input, Draft.class);
-            Draft draft = generated.value();
-            if (draft == null || !validator.validate(draft).isEmpty()
-                    || (kind == Kind.EXAMPLE && draft.code().isBlank())) {
-                if (attempt == 0) continue;
-                throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Generated content failed semantic validation");
+            generated = gateway.generate(prompt, owner.toString(), input, Draft.class);
+            Draft candidate = generated.value();
+            boolean valid = candidate != null
+                    && validator.validate(candidate).isEmpty()
+                    && (kind != Kind.EXAMPLE || !candidate.code().isBlank());
+            if (valid) {
+                draft = candidate;
+                break;
             }
-            Output output = new Output(UUID.randomUUID(), kind, draft.title(), draft.content(), draft.code(),
-                    draft.language(), true, "AI_GENERATED", List.copyOf(sources), generated.modelId(),
-                    generated.promptVersion(), level, springVersion, Instant.now(), null);
-            // Recheck approval after the potentially slow provider call.
-            if (sources.stream().anyMatch(source -> approved(source.id()) == null)) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Supporting source approval changed");
-            }
-            repository.save(owner, output);
-            return output;
         }
-        throw new IllegalStateException("Unreachable generation state");
+        if (draft == null) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+                    "Generated content failed semantic validation after 2 attempts");
+        }
+        Output output = new Output(UUID.randomUUID(), kind, draft.title(), draft.content(), draft.code(),
+                draft.language(), true, "AI_GENERATED", List.copyOf(sources), generated.modelId(),
+                generated.promptVersion(), level, springVersion, Instant.now(), null);
+        // Recheck approval after the potentially slow provider call.
+        if (sources.stream().anyMatch(source -> approved(source.id()) == null)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Supporting source approval changed");
+        }
+        repository.save(owner, output);
+        return output;
     }
 
     private Grounding grounding(List<SearchHit> hits) {

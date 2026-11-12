@@ -200,7 +200,9 @@ public class PromptRegistryService implements com.springtechkb.ai.PromptCatalog 
 
     private static int bucket(String callerKey) {
         String stableKey = callerKey == null || callerKey.isBlank() ? "anonymous" : callerKey;
-        return Math.floorMod(stableKey.hashCode(), 100);
+        // SHA-256 is stable across JVM implementations and restarts, unlike String.hashCode()
+        String hex = com.springtechkb.HashUtils.sha256Hex(stableKey);
+        return (int) (Long.parseUnsignedLong(hex.substring(0, 8), 16) % 100);
     }
 
     private static void validateName(String name) {

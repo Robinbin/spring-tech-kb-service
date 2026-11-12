@@ -16,6 +16,7 @@ import com.springtechkb.knowledge.SourceAdmission;
 import com.springtechkb.knowledge.internal.SourceAdmissionPolicy;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,14 +27,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class KnowledgeIngestionService {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
     private final JdbcTemplate jdbc;
     private final VectorStore vectorStore;
     private final ContextualChunker chunker;
     private final SourceAdmissionPolicy admissionPolicy;
     private final InstructionInjectionDetector injectionDetector;
     private final ApplicationEventPublisher events;
+    private final ObjectMapper objectMapper;
 
     KnowledgeIngestionService(
             JdbcTemplate jdbc,
@@ -41,13 +41,15 @@ public class KnowledgeIngestionService {
             ContextualChunker chunker,
             SourceAdmissionPolicy admissionPolicy,
             InstructionInjectionDetector injectionDetector,
-            ApplicationEventPublisher events) {
+            ApplicationEventPublisher events,
+            ObjectMapper objectMapper) {
         this.jdbc = jdbc;
         this.vectorStore = vectorStore;
         this.chunker = chunker;
         this.admissionPolicy = admissionPolicy;
         this.injectionDetector = injectionDetector;
         this.events = events;
+        this.objectMapper = objectMapper;
     }
 
     @Transactional
@@ -63,7 +65,8 @@ public class KnowledgeIngestionService {
         }
 
         UUID sourceId = upsertSource(admission, document);
-        jdbc.update("DELETE FROM vector_store WHERE metadata ->> 'source_id' = ?", sourceId.toString());
+        // Delete via VectorStore abstraction so this survives a backend change
+        vectorStore.delete(new FilterExpressionBuilder().eq("source_id", sourceId.toString()).build());
         jdbc.update("DELETE FROM knowledge_chunk WHERE source_id = ?", sourceId);
         insertChunks(sourceId, chunks);
 
@@ -198,7 +201,7 @@ public class KnowledgeIngestionService {
         payload.put("contentHash", contentHash);
         payload.put("chunkCount", chunkCount);
         try {
-            return OBJECT_MAPPER.writeValueAsString(payload);
+            return objectMapper.writeValueAsString(payload);
         } catch (JsonProcessingException exception) {
             throw new IllegalStateException("Could not serialize knowledge indexing outbox event", exception);
         }

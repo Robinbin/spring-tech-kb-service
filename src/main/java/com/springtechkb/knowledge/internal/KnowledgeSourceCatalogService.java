@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+import com.springtechkb.HttpErrors;
 import com.springtechkb.knowledge.CrawledDocument;
 import com.springtechkb.knowledge.KnowledgeSource;
 import com.springtechkb.knowledge.SourceAdmission;
@@ -60,7 +61,7 @@ class KnowledgeSourceCatalogService {
                 || request.sourceKeys().stream().distinct().count() != request.sourceKeys().size()
                 || operatorId == null || request.approvalReference() == null
                 || request.approvalReference().isBlank() || request.approvalReference().length() > 500) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            throw HttpErrors.badRequest(
                     "Provide 1-3 distinct catalog sources within maxSources and a legal approval reference");
         }
 
@@ -76,8 +77,7 @@ class KnowledgeSourceCatalogService {
                     SourceLicense.valueOf(rs.getString("license_type")), rs.getString("license_url")),
                     sourceKey);
             if (matches.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        "Unknown or disabled catalog source: " + sourceKey);
+                throw HttpErrors.badRequest("Unknown or disabled catalog source: " + sourceKey);
             }
             selected.add(matches.getFirst());
         }

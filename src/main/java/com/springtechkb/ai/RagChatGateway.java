@@ -5,19 +5,19 @@ import reactor.core.publisher.Flux;
 /** Search-module-safe interface for streaming an answer from the configured chat provider. */
 public interface RagChatGateway {
 
-    Flux<ChatChunk> stream(String stableSystemPrefix, String userQuestion);
+    /** Primary method: all parameters explicit. Implementations must override this. */
+    Flux<ChatChunk> stream(ChatTier tier, String stableSystemPrefix, String userQuestion, String promptNamespace);
 
     default String modelId(ChatTier tier) {
         return tier.name();
     }
 
-    default Flux<ChatChunk> stream(ChatTier tier, String stableSystemPrefix, String userQuestion) {
-        return stream(stableSystemPrefix, userQuestion);
+    default Flux<ChatChunk> stream(String stableSystemPrefix, String userQuestion) {
+        return stream(ChatTier.STANDARD, stableSystemPrefix, userQuestion, "v1");
     }
 
-    default Flux<ChatChunk> stream(
-            ChatTier tier, String stableSystemPrefix, String userQuestion, String promptNamespace) {
-        return stream(tier, stableSystemPrefix, userQuestion);
+    default Flux<ChatChunk> stream(ChatTier tier, String stableSystemPrefix, String userQuestion) {
+        return stream(tier, stableSystemPrefix, userQuestion, "v1");
     }
 
     record ChatChunk(
